@@ -1,0 +1,266 @@
+/* CSS */
+.waiting-payments {
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.2);
+    min-height: 100vh;
+    margin-top: 30px;
+    padding: 20px;
+    background-color: #fff;
+    border-radius: 8px;
+}
+
+.waiting-payments h2 {
+    font-size: 28px;
+    margin-bottom: 18px;
+    color: #2c3e50;
+    font-weight: bold;
+}
+
+.waiting-item {
+
+    border-radius: 8px;
+    margin-bottom: 1rem;
+    overflow: hidden;
+}
+
+.waiting-item-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 1rem;
+    cursor: pointer;
+    background: #f1f4f5;
+}
+
+.waiting-item-left,
+.waiting-item-right {
+    display: flex;
+    flex-direction: column;
+    gap: 0.5rem;
+}
+
+.waiting-row {
+    display: flex;
+    gap: 1rem;
+    align-items: center;
+}
+
+.waiting-id {
+    font-weight: 600;
+    font-size: 1.1rem;
+    color: #2c3e50;
+}
+
+.waiting-product {
+    font-weight: 600;
+    font-size: 1.1rem;
+    color: #2c3e50;
+}
+
+.waiting-amount {
+    color: #28a745;
+    font-weight: bold;
+}
+
+.waiting-user {
+    color: #7f8c8d;
+    font-size: 0.9rem;
+}
+
+.waiting-status {
+    text-transform: uppercase;
+    font-size: 14px;
+    padding: 4px 8px;
+    border-radius: 5px;
+    background-color: #fdeebb;
+    color: #856404;
+    font-weight: bold;
+}
+
+.waiting-date {
+    color: #7f8c8d;
+    font-size: 0.9rem;
+}
+
+.waiting-actions {
+    display: flex;
+    justify-content: center;
+    gap: 10px;
+    margin-top: 5px;
+}
+
+.waiting-confirm,
+.waiting-reject {
+    padding: 6px 10px;
+    font-size: 0.8rem;
+    border: none;
+    border-radius: 0px;
+    cursor: pointer;
+}
+
+.waiting-confirm {
+    background-color: transparent;
+    color: #28a745;
+    font-weight: bold;
+    padding: 0;
+    width: fit-content;
+    height: fit-content;
+    width: 30px;
+    height: 30px;
+    transition: 0.3s ease;
+}
+
+.waiting-reject {
+    background-color: transparent;
+    color: #dc3545;
+    font-weight: bold;
+    padding: 0;
+    width: fit-content;
+    height: fit-content;
+    width: 30px;
+    height: 30x;
+    transition: 0.3s ease;
+}
+
+.waiting-confirm:hover,
+.waiting-reject:hover {
+    opacity: 0.8;
+    background-color: transparent;
+
+}
+
+.waiting-details {
+    background-color: #f7f7f7;
+    padding: 1rem 2rem;
+    border-top: 1px solid #e0e0e0;
+    display: flex;
+    flex-direction: column;
+    gap: 15px;
+    justify-content: space-between;
+}
+
+.waiting-details-grid {
+    display: flex;
+    flex-direction: column;
+    gap: 0.6rem;
+}
+
+.waiting-details-grid span {
+    color: #2c3e50;
+    font-weight: bold;
+}
+
+.waiting-image-container {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.waiting-image {
+    max-width: 400px;
+    max-height: 400px;
+    border-radius: 8px;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+}
+
+.waiting-error {
+    color: #dc3545;
+    padding: 1rem;
+}
+
+.waiting-updating {
+    color: #7f8c8d;
+    font-style: italic;
+}
+
+.waiting-empty {
+    text-align: center;
+    margin-top: 2rem;
+    color: #2c3e50;
+    font-weight: 600;
+}
+
+.pagination {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    flex-wrap: wrap;
+    gap: 10px;
+    margin-top: 20px;
+}
+
+.pagination button {
+    background-color: #fff;
+    border: 2px solid #fff;
+    color: #2c3e50;
+    width: 40px;
+    height: 40px;
+    border-radius: 50%;
+    cursor: pointer;
+    font-weight: bold;
+    transition: all 0.3s ease;
+}
+
+.pagination button.active {
+    background-color: #2c3e50;
+    color: #fff;
+    border: 2px solid #2c3e50;
+}
+
+
+
+.pagination button:hover {
+    background-color: #2c3e50;
+    color: #fff;
+    border: 2px solid #2c3e50;
+}
+
+.next-button {
+    width: auto !important;
+    height: auto !important;
+    padding: 6px 12px !important;
+    border-radius: 5px !important;
+    font-weight: bold;
+}
+
+@media (max-width: 475px) {
+    .waiting-payments {
+        margin-top: 20px;
+        padding: 15px;
+    }
+
+    .waiting-image {
+        max-width: 300px;
+        max-height: 300px;
+    }
+
+    .waiting-item {
+        margin-bottom: 0.75rem;
+    }
+
+    .waiting-payments h2 {
+        font-size: 25px;
+        margin-bottom: 15px;
+    }
+
+    .waiting-item-header {
+        flex-direction: column;
+        gap: 20px;
+    }
+
+    .waiting-item-left {
+        align-items: center;
+        gap: 5px;
+    }
+}
+
+@media (max-width: 375px) {
+    .waiting-payments {
+        margin-top: 20px;
+        padding: 15px;
+    }
+
+    .waiting-image {
+        max-width: 220px;
+        max-height: 220px;
+    }
+}

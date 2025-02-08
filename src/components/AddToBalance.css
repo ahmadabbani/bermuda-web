@@ -1,0 +1,211 @@
+/* Main Container */
+.add-credit {
+    margin: 4rem 4rem 2rem 4rem;
+    padding: 2rem;
+    font-family: 'Segoe UI', sans-serif;
+    background-color: #fff;
+    min-height: 100vh;
+    border-radius: 25px;
+}
+
+.add-credit__title {
+    color: #2c3e50;
+    text-align: center;
+    font-weight: bold;
+    font-size: 2.5rem;
+    margin-bottom: 3rem;
+}
+
+/* Payment Options */
+.add-credit__options {
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    gap: 2rem;
+    margin: 2rem 0;
+}
+
+.add-credit__option {
+    border: 2px solid #e9ecef;
+    border-radius: 8px;
+    padding: 1rem;
+    cursor: pointer;
+    transition: all 0.3s ease;
+}
+
+.add-credit__option:hover {
+    border-color: #8360a9;
+    box-shadow: 0 4px 12px rgba(131, 96, 169, 0.1);
+}
+
+.add-credit__option-icon {
+    width: 100%;
+    max-width: 100%;
+    object-fit: cover;
+}
+
+.add-credit__option-text {
+    color: #8360a9;
+    font-weight: 600;
+    font-size: 1.1rem;
+}
+
+/* Modal Overlay */
+.add-credit__overlay {
+    position: fixed;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background: rgba(0, 0, 0, 0.5);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    z-index: 1000;
+}
+
+.add-credit__modal {
+    background: white;
+    border-radius: 8px;
+    width: 90%;
+    max-width: 500px;
+    padding: 2rem;
+    max-height: 90vh;
+    overflow-y: auto;
+}
+
+.add-credit__modal-title {
+    color: #8360a9;
+    text-align: center;
+    margin-bottom: 1.5rem;
+    font-size: 1.5rem;
+}
+
+/* Form Elements */
+.add-credit__form-group {
+    margin-bottom: 1.5rem;
+}
+
+.add-credit__label {
+    display: block;
+    color: #8360a9;
+    margin-bottom: 0.5rem;
+    font-weight: 600;
+}
+
+.add-credit__input {
+    width: 100%;
+    padding: 0.8rem;
+    border: 2px solid #e9ecef;
+    border-radius: 4px;
+    font-size: 1rem;
+    transition: all 0.3s ease;
+}
+
+.add-credit__input--readonly {
+    background-color: #f8f9fa;
+    cursor: not-allowed;
+}
+
+.add-credit__input:focus {
+    outline: none;
+    border-color: #8360a9;
+    box-shadow: 0 0 0 3px rgba(131, 96, 169, 0.1);
+}
+
+.add-credit__input::placeholder {
+    color: #999;
+}
+
+/* File Input */
+.add-credit__file {
+    width: 100%;
+    padding: 0.8rem;
+    color: #999;
+    border: 2px solid #e9ecef;
+    border-radius: 4px;
+    background: white;
+    cursor: pointer;
+}
+
+.add-credit__file::file-selector-button {
+    visibility: hidden;
+}
+
+.add-credit__file::before {
+    content: 'Upload Image';
+    background: #8360a9;
+    color: white;
+    padding: 0.5rem 1rem;
+    border-radius: 4px;
+    margin-right: 1rem;
+    transition: 0.3s ease;
+}
+
+.add-credit__file:hover:before {
+    opacity: 0.8;
+}
+
+/* Notice Text */
+.add-credit__notice {
+    color: #666;
+    font-size: 0.9rem;
+    line-height: 1.6;
+    text-align: center;
+    margin: 1.5rem 0;
+    padding: 1rem;
+    background: #f8f9fa;
+    border-radius: 4px;
+}
+
+/* Modal Actions */
+.add-credit__actions {
+    display: flex;
+    gap: 1rem;
+    margin-top: 2rem;
+}
+
+.add-credit__btn {
+    flex: 1;
+    padding: 0.8rem 1.5rem;
+    border: none;
+    border-radius: 4px;
+    font-weight: 600;
+    cursor: pointer;
+    transition: opacity 0.3s ease;
+}
+
+.add-credit__btn--submit {
+    background: #8360a9;
+    color: white;
+}
+
+.add-credit__btn--cancel {
+    background: #e9ecef;
+    color: #666;
+}
+
+.add-credit__btn:hover {
+    opacity: 0.9;
+}
+
+.add-credit__btn:disabled {
+    opacity: 0.7;
+    cursor: not-allowed;
+}
+
+@media (max-width: 768px) {
+    .add-credit {
+        margin: 2.5rem 2rem 2rem 2rem;
+    }
+}
+
+@media (max-width: 600px) {
+    .add-credit {
+        padding: 1rem;
+    }
+
+    .add-credit__title {
+        font-size: 2rem;
+        margin-bottom: 2rem;
+    }
+}

@@ -1,0 +1,362 @@
+/* Container */
+.users-list-container {
+    padding: 20px 30px;
+    background-color: transparent;
+    /* Updated background to match the body color */
+    color: #fff;
+}
+
+.users-search {
+    margin-top: 1rem;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+}
+
+.search-container {
+    background: rgba(255, 255, 255, 0.2);
+    /* Backdrop filter effect */
+    backdrop-filter: blur(10px);
+    display: flex;
+    align-items: center;
+    gap: 1rem;
+    border-radius: 10px;
+    padding: 15px 30px;
+}
+
+.search-input {
+    flex-grow: 1;
+    background: #fff;
+    border: 2px solid #fff;
+    color: #2c3e50;
+    padding: 10px 15px;
+    border-radius: 5px;
+    font-size: 16px;
+    outline: none;
+    transition: all 0.3s ease;
+}
+
+.search-input::placeholder {
+    color: rgba(44, 62, 80, 0.5);
+}
+
+.search-input:focus {
+    border-color: rgba(44, 62, 80, 0.9);
+    box-shadow: 0 0 8px rgba(44, 62, 80, 0.2);
+}
+
+.search-button,
+.reset-search-button {
+    background-color: #2c3e50;
+    color: #fff;
+    border: 2px solid #2c3e50;
+    padding: 10px 20px;
+    border-radius: 5px;
+    font-size: 16px;
+    font-weight: bold;
+    cursor: pointer;
+    transition: all 0.3s ease;
+
+}
+
+.search-button:hover,
+.reset-search-button:hover {
+    opacity: 0.8;
+}
+
+.search-button:disabled {
+    opacity: 0.5;
+    cursor: not-allowed;
+    background-color: #2c3e50;
+    color: #fff;
+}
+
+.search-button:focus,
+.reset-search-button:focus {
+    outline: none;
+    box-shadow: 0 0 8px rgba(44, 62, 80, 0.3);
+}
+
+/* Title */
+.users-list-title {
+    background: rgba(255, 255, 255, 0.2);
+    /* Backdrop filter effect */
+    backdrop-filter: blur(10px);
+    /* Glass effect */
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    border-radius: 10px;
+    text-align: left;
+    width: fit-content;
+    padding: 15px 30px;
+    line-height: normal;
+}
+
+.users-list-title h2 {
+    margin: 0;
+    color: #fff;
+    font-size: 28px;
+    padding: 0;
+}
+
+/* Error message */
+.error-message {
+    color: red;
+    font-size: 1rem;
+    margin-top: 10px;
+}
+
+/* User cards */
+.users-list {
+    display: flex;
+    flex-direction: column;
+    margin-top: 25px;
+    gap: 15px;
+    padding: 20px;
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.2);
+    border-radius: 8px;
+}
+
+.user-card {
+    background-color: #fff;
+    padding: 20px;
+    box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+    border-radius: 8px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+.user-details {
+    flex-wrap: wrap;
+    display: flex;
+    justify-content: space-between;
+    width: 100%;
+}
+
+/* User Info */
+.user-info {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 2rem;
+    align-items: center;
+}
+
+.user-info span {
+    font-size: 1rem;
+    color: #7f8c8d;
+    display: flex;
+    align-items: center;
+    gap: 6px;
+
+}
+
+.user-id {
+    font-weight: bold;
+    color: #2c3e50 !important;
+}
+
+.user-since label {
+    font-weight: bold;
+}
+
+
+/* Actions */
+.user-actions {
+    display: flex;
+    gap: 10px;
+    align-items: center;
+}
+
+.action-button {
+    padding: 6px 10px;
+    font-size: 0.8rem;
+    border: none;
+    border-radius: 0px;
+    cursor: pointer;
+}
+
+.in-button {
+    background-color: transparent;
+    color: #28a745;
+    font-weight: bold;
+    padding: 0;
+    width: fit-content;
+    height: fit-content;
+    width: 30px;
+    height: 30px;
+    transition: 0.3s ease;
+}
+
+.out-button {
+    background-color: transparent;
+    color: #dc3545;
+    font-weight: bold;
+    padding: 0;
+    width: fit-content;
+    height: fit-content;
+    width: 30px;
+    height: 30x;
+    transition: 0.3s ease;
+}
+
+.profile-button {
+    background-color: #2c3e50;
+    border-radius: 5px;
+    color: #fff;
+    transition: 0.3s ease;
+}
+
+.profile-button:hover {
+    opacity: 0.9;
+}
+
+.in-button:hover,
+.out-button:hover {
+    opacity: 0.8;
+    background-color: transparent;
+}
+
+.modal-title {
+    color: #2c3e50;
+    font-weight: bold;
+}
+
+.pagination {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    gap: 10px;
+    margin-top: 20px;
+}
+
+.pagination button {
+    background-color: #fff;
+    border: 2px solid #fff;
+    color: #2c3e50;
+    width: 40px;
+    height: 40px;
+    border-radius: 50%;
+    cursor: pointer;
+    transition: all 0.3s ease;
+}
+
+.pagination button.active {
+    background-color: #2c3e50;
+    color: #fff;
+    border: 2px solid #2c3e50;
+}
+
+.pagination button:hover {
+    background-color: #2c3e50;
+    color: #fff;
+    border: 2px solid #2c3e50;
+}
+
+.next-button {
+    width: auto !important;
+    height: auto !important;
+    padding: 6px 12px !important;
+    border-radius: 5px !important;
+    font-weight: bold;
+}
+
+.no-users {
+    text-align: center;
+    color: #fff;
+    margin-top: 2rem;
+}
+
+@media (max-width: 1100px) {
+    .users-list-container {
+        padding: 0px 0px;
+    }
+
+    .user-details {
+        gap: 25px;
+    }
+}
+
+
+@media (max-width: 850px) {
+    .users-search {
+        margin-top: 1rem;
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+
+    }
+
+    .search-container {
+        padding: 12px 20px;
+        gap: 0.5rem;
+    }
+
+    .search-input {
+        padding: 8px 10px;
+        font-size: 14px;
+    }
+
+    .search-button,
+    .reset-search-button {
+        padding: 8px 10px;
+        font-size: 14px;
+    }
+
+    .users-list {
+        padding: 10px;
+        gap: 10px;
+    }
+
+    .users-list-title {
+        padding: 10px 20px;
+    }
+
+    .users-list-title h2 {
+        font-size: 25px;
+    }
+
+    .user-info {
+        gap: 1rem;
+    }
+
+}
+
+@media (max-width: 520px) {
+    .users-search {
+        flex-direction: column;
+        align-items: start;
+        gap: 15px;
+    }
+
+    .search-container {
+        padding: 10px 15px;
+    }
+
+    .search-input {
+        padding: 6px 8px;
+    }
+
+    .search-button,
+    .reset-search-button {
+        padding: 6px 8px;
+    }
+
+    .users-list-title {
+        padding: 8px 10px;
+    }
+
+    .users-list-title h2 {
+        font-size: 20px;
+    }
+
+}
+
+@media (max-width: 445px) {
+    .search-container {
+        flex-direction: column;
+        margin-left: auto;
+        margin-right: auto;
+    }
+}

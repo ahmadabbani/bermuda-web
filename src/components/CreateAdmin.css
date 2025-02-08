@@ -1,0 +1,110 @@
+.create-admin-container {
+    max-width: 600px;
+    margin: 2rem auto;
+    padding: 2rem;
+    border-radius: 8px;
+    background-color: #fff;
+    font-family: 'Segoe UI', sans-serif;
+}
+
+.create-admin-title {
+    color: #8360a9;
+    text-align: center;
+    font-size: 2rem;
+    margin-bottom: 1.5rem;
+}
+
+.create-admin-form-group {
+    margin-bottom: 1.5rem;
+}
+
+.create-admin-form-label {
+    display: block;
+    margin-bottom: 0.5rem;
+    color: #8360a9;
+    font-weight: 600;
+}
+
+.create-admin-form-input {
+    width: 100%;
+    padding: 0.8rem;
+    border: 1px solid #ddd;
+    border-radius: 4px;
+    font-size: 1rem;
+    transition: border-color 0.3s ease;
+}
+
+.create-admin-form-input:focus {
+    outline: none;
+    border-color: #8360a9;
+    box-shadow: 0 0 0 2px rgba(131, 96, 169, 0.1);
+}
+
+.create-admin-form-input::placeholder {
+    color: #999;
+    font-style: italic;
+}
+
+.create-admin-submit-btn {
+    width: 100%;
+    padding: 1rem;
+    background-color: #8360a9;
+    color: white;
+    border: none;
+    border-radius: 4px;
+    font-size: 1rem;
+    font-weight: bold;
+    cursor: pointer;
+    transition: opacity 0.3s ease;
+}
+
+.create-admin-submit-btn:disabled {
+    background-color: #a391ba;
+    cursor: not-allowed;
+}
+
+.create-admin-submit-btn:hover:not(:disabled) {
+    opacity: 0.9;
+}
+
+.create-admin-message {
+    padding: 1rem;
+    margin-top: 1rem;
+    border-radius: 4px;
+    font-weight: 500;
+}
+
+.create-admin-message.success {
+    background-color: #e8f5e9;
+    color: #2e7d32;
+}
+
+.create-admin-message.error {
+    background-color: #ffebee;
+    color: #c62828;
+    text-align: center;
+}
+
+@media (max-width: 580px) {
+    .create-admin-container {
+        margin: 1.5rem auto 1rem auto;
+        padding: 1.5rem;
+    }
+
+    .create-admin-title {
+        font-size: 1.8rem;
+        margin-bottom: 1.25rem;
+    }
+
+    .create-admin-form-group {
+        margin-bottom: 1rem;
+    }
+
+    .create-admin-form-input {
+        padding: 0.5rem;
+    }
+
+    .create-admin-form-input::placeholder {
+        font-size: 0.8rem;
+    }
+}

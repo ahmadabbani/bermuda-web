@@ -1,0 +1,72 @@
+import React, { useEffect } from "react";
+import { Link, useOutletContext } from "react-router-dom";
+import { toast } from "react-toastify"; // Import toast
+import "react-toastify/dist/ReactToastify.css"; // Import the CSS for styling
+
+const Home = () => {
+  const {
+    allCategories,
+    newLoading,
+    productsLoading,
+    newError,
+    productsError,
+  } = useOutletContext(); // Get the products passed from Dashboard
+  const isLoading = newLoading || productsLoading;
+  const error = newError || productsError;
+
+  // Show error toast if there's an error
+  useEffect(() => {
+    if (error) {
+      toast.error(`Error: ${error}`, {
+        position: "top-right",
+        autoClose: 3000,
+        hideProgressBar: false,
+        closeOnClick: true,
+        pauseOnHover: true,
+        draggable: true,
+      });
+    }
+  }, [error]);
+  return (
+    <div>
+      <h1>Categories</h1>
+      {isLoading ? ( // Show loading if either newLoading or productsLoading is true
+        <p>Loading categories and products...</p>
+      ) : (
+        <div
+          className="categories-list"
+          style={{ display: "flex", flexWrap: "wrap", gap: "15px" }}
+        >
+          {allCategories.map((cat) => {
+            // Normalize the image path: replace backslashes with forward slashes
+            const normalizedImagePath = cat.img.replace(/\\/g, "/");
+            // Check if the image is a relative path (from endoit/api/categories)
+            const isRelativePath = normalizedImagePath.startsWith("uploads/");
+            // Construct the full image URL
+            const imageUrl = isRelativePath
+              ? `http://localhost:5000/${normalizedImagePath}` // Add backend URL prefix
+              : normalizedImagePath; // Use the full URL as is
+
+            return (
+              <div key={cat.name} style={{ width: "calc(20% - 15px)" }}>
+                <Link
+                  to={`/dashboard/category/${encodeURIComponent(cat.name)}`}
+                >
+                  <img
+                    src={imageUrl} // Use the constructed image URL
+                    alt={cat.name}
+                    style={{ width: "100%", maxWidth: "100%", height: "auto" }}
+                  />
+                  <p>{cat.name}</p>
+                </Link>
+                <p>{cat?.section}</p>
+              </div>
+            );
+          })}
+        </div>
+      )}
+    </div>
+  );
+};
+
+export default Home;

@@ -1,0 +1,514 @@
+sign in route: 
+// Sign-In Route
+router.post("/signin", async (req, res) => {
+  const { email, password } = req.body;
+
+  // Validate input
+  if (!email && !password) {
+    return res.status(400).json({
+      signInStatus: false,
+      error: "Please enter both email and password",
+    });
+  }
+  if (!email) {
+    return res.status(400).json({
+      signInStatus: false,
+      error: "Please enter your email",
+    });
+  }
+  if (!password) {
+    return res.status(400).json({
+      signInStatus: false,
+      error: "Please enter your password",
+    });
+  }
+
+  // Email format validation
+  const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+  if (!emailRegex.test(email)) {
+    return res.status(400).json({
+      signInStatus: false,
+      error: "Invalid email format",
+    });
+  }
+
+  try {
+    // Check if the user exists in the database
+    const [user] = await db
+      .execute("SELECT * FROM users WHERE email = ?", [email])
+      .catch((err) => {
+        console.error("Database query error:", err);
+        throw new Error("Database query failed");
+      });
+
+    if (!user || user.length === 0) {
+      return res.status(401).json({
+        signInStatus: false,
+        error: "Invalid email or password",
+      });
+    }
+
+    const existingUser = user[0];
+    //console.log("User found:", existingUser); // Add before bcrypt compare
+    // Compare the provided password with the hashed password in the database
+    const isPasswordValid = await bcrypt.compare(
+      password,
+      existingUser.password
+    );
+
+    if (!isPasswordValid) {
+      return res.status(401).json({
+        signInStatus: false,
+        error: "Invalid email or password",
+      });
+    }
+
+    // Determine the role from the database
+    const role = existingUser.role;
+
+    // Generate a JWT token
+    const token = jwt.sign(
+      {
+        role,
+        email: existingUser.email,
+        id: existingUser.id,
+        username: existingUser.username,
+      },
+      "jwt_secret_key", // Replace with a strong, secure secret key
+      { expiresIn: "1d" }
+    );
+
+    // Set the token in a secure cookie
+    res.cookie("token", token, {
+      // httpOnly: true,
+      sameSite: "Lax",
+      maxAge: 24 * 60 * 60 * 1000, // Optional: 1 day expiration
+      path: "/",
+    });
+
+    // Send response
+    return res.status(200).json({
+      signInStatus: true,
+      id: existingUser.id,
+      role,
+    });
+  } catch (error) {
+    console.error("Error during sign-in:", error);
+    return res.status(500).json({
+      signInStatus: false,
+      error: "Unable to sign in at this time. Please try again later.",
+    });
+  }
+});
+
+
+signin comp: import React, { useEffect, useState } from "react";
+import axios from "axios";
+import { useNavigate } from "react-router-dom";
+
+const SignIn = ({ isAuthorized, setIsAuthorized }) => {
+  const [formData, setFormData] = useState({
+    email: "",
+    password: "",
+  });
+  const [error, setError] = useState("");
+  const [success, setSuccess] = useState(false);
+  const [isLoading, setIsLoading] = useState(false);
+  const navigate = useNavigate();
+
+  // Redirect if already authorized
+  useEffect(() => {
+    if (isAuthorized) {
+      navigate("/dashboard");
+    }
+  }, [isAuthorized, navigate]);
+
+  const handleSubmit = async (e) => {
+    e.preventDefault();
+    if (isLoading) return; // Prevent double submission
+    setIsLoading(true);
+    // Clear previous messages
+    setSuccess(false);
+    setError("");
+
+    try {
+      const response = await axios.post(
+        "http://localhost:5000/api/signin",
+        formData,
+        {
+          withCredentials: true,
+          headers: {
+            "Content-Type": "application/json",
+          },
+        }
+      );
+
+      if (response.data.signInStatus) {
+        setSuccess(true);
+        setError("");
+        localStorage.setItem("authorized", true); // Store sign-in status
+        setIsAuthorized(true);
+        navigate("/dashboard");
+      }
+    } catch (err) {
+      // Handle different types of errors
+      if (err.response) {
+        // Server responded with an error
+        setError(err.response.data.error || "An error occurred during sign in");
+      } else if (err.request) {
+        // Request was made but no response received
+        setError("Unable to connect to the server. Please try again later.");
+      } else {
+        // Something else went wrong
+        setError("An unexpected error occurred. Please try again.");
+      }
+    } finally {
+      setIsLoading(false);
+    }
+  };
+  const handleChange = (e) => {
+    const { name, value } = e.target;
+    setFormData((prev) => ({
+      ...prev,
+      [name]: value,
+    }));
+    setError("");
+  };
+
+  return (
+    <div>
+      <h2>Sign In</h2>
+      <form onSubmit={handleSubmit}>
+        <div>
+          <label>Email:</label>
+          <input
+            type="text"
+            name="email"
+            value={formData.email}
+            onChange={handleChange}
+            disabled={isLoading}
+          />
+        </div>
+        <div>
+          <label>Password:</label>
+          <input
+            type="text"
+            name="password"
+            value={formData.password}
+            onChange={handleChange}
+            disabled={isLoading}
+          />
+        </div>
+        <div>
+          <p>
+            <a href="/request-reset-password">Forgot Password?</a>
+          </p>
+        </div>
+        {error && <p style={{ color: "red" }}>{error}</p>}
+        <button type="submit" disabled={isLoading}>
+          {isLoading ? "Signing in..." : "Sign In"}
+        </button>
+      </form>
+      {success && <p style={{ color: "green" }}>You are signed in!</p>}
+    </div>
+  );
+};
+
+export default SignIn;
+
+
+app:
+import { BrowserRouter as Router, Routes, Route } from "react-router-dom";
+import { ToastContainer } from "react-toastify";
+import "react-toastify/dist/ReactToastify.css";
+import SignUp from "./components/Signup";
+import SignIn from "./components/SignIn";
+import RequestResetPassword from "./components/RequestResetPassword";
+import ResetPassword from "./components/ResetPassword";
+import Dashboard from "./components/Dashboard";
+import Categorie from "./components/Categorie";
+import Home from "./components/Home";
+import PrivateRoute from "./components/PrivateRoute";
+//import PrivateOrderRoute from "./components/PrivateOrderRoute";
+import AdminDashboard from "./components/AdminDashboard";
+import CreateAdmin from "./components/CreateAdmin";
+import "./App.css";
+import Header from "./components/Header";
+import AddToBalance from "./components/AddToBalance";
+import MyOrders from "./components/MyOrders";
+import { useEffect, useState } from "react";
+import AdminHome from "./components/AdminHome";
+import OrdersHistory from "./components/OrdersHistory";
+import ActiveOrders from "./components/ActiveOrders";
+import UsersList from "./components/UsersList";
+import MyPayments from "./components/MyPayments";
+import ActivePayments from "./components/ActivePayments";
+import PaymentsHistory from "./components/PaymentsHistory";
+import Profile from "./components/Profile";
+
+function App() {
+  const [role, setRole] = useState(null);
+  const [name, setName] = useState(null);
+  const [email, setEmail] = useState(null);
+  const [id, setId] = useState(null);
+  const [isAuthorized, setIsAuthorized] = useState(
+    !!localStorage.getItem("authorized")
+  );
+  useEffect(() => {
+    // Extract the id name role from the JWT stored in the cookie
+    const fetchUserData = async () => {
+      const token = document.cookie
+        .split("; ")
+        .find((row) => row.startsWith("token="))
+        ?.split("=")[1];
+
+      if (token) {
+        const decodedToken = JSON.parse(atob(token.split(".")[1]));
+        console.log("decodedRole:", decodedToken.username);
+        setRole(decodedToken.role);
+        setName(decodedToken.username);
+        setId(decodedToken.id);
+        setEmail(decodedToken.email);
+      }
+    };
+    fetchUserData();
+  }, [isAuthorized]);
+
+  return (
+    <Router>
+      <ToastContainer
+        position="top-right"
+        autoClose={3000}
+        hideProgressBar={false}
+        newestOnTop={false}
+        closeOnClick
+        rtl={false}
+        pauseOnFocusLoss
+        draggable
+        pauseOnHover
+      />
+      <Header
+        isAuthorized={isAuthorized}
+        setIsAuthorized={setIsAuthorized}
+        role={role}
+        name={name}
+        id={id}
+      />
+
+      <Routes>
+        <Route path="/my-orders" element={<MyOrders id={id} />} />
+        <Route path="/my-payments" element={<MyPayments id={id} />} />
+        <Route
+          path="/profile/:id"
+          element={<Profile user_id={id} name={name} role={role} />}
+        />
+        <Route path="/dashboard" element={<Dashboard />}>
+          <Route path="" element={<Home />} />{" "}
+          <Route
+            path="category/:id"
+            element={
+              <Categorie
+                username={name}
+                userId={id}
+                accountemail={email}
+                isAuthorized={isAuthorized}
+              />
+            }
+          />
+        </Route>
+        <Route path="/charge" element={<AddToBalance id={id} />} />{" "}
+        {/*to be
+        protected as unauthorized user cant set /charge in url, if he did it navigate
+        to signin */}
+        <Route path="/admin" element={<AdminDashboard />}>
+          <Route path="" element={<AdminHome />} />
+          <Route path="orders" element={<OrdersHistory />} />
+          <Route path="active-orders" element={<ActiveOrders />} />
+          <Route path="payments-history" element={<PaymentsHistory />} />
+          <Route path="active-payments" element={<ActivePayments />} />
+          <Route path="users" element={<UsersList />} />
+        </Route>
+        <Route
+          path="/signin"
+          element={
+            <SignIn
+              isAuthorized={isAuthorized}
+              setIsAuthorized={setIsAuthorized}
+            />
+          }
+        />
+        <Route path="/signup" element={<SignUp />} />
+        <Route
+          path="/request-reset-password"
+          element={<RequestResetPassword />}
+        />
+        <Route path="/reset-password/:token" element={<ResetPassword />} />
+        {/* Protect the create-admin route */}
+        <Route
+          path="/create-admin"
+          element={
+            <PrivateRoute role={role} isAuthorized={isAuthorized}>
+              <CreateAdmin />
+            </PrivateRoute>
+          }
+        />
+      </Routes>
+    </Router>
+  );
+}
+
+export default App;
+
+
+
+useauth:
+import { useState, useEffect } from "react";
+import { jwtDecode } from "jwt-decode";
+
+export const useAuth = () => {
+  const [isAuthorized, setIsAuthorized] = useState(false);
+  const [user, setUser] = useState(null);
+
+  useEffect(() => {
+    const fetchAuthData = () => {
+      const token = document.cookie
+        .split("; ")
+        .find((row) => row.startsWith("token="))
+        ?.split("=")[1];
+
+      if (token) {
+        try {
+          const decodedToken = jwtDecode(token);
+          if (decodedToken?.authorized) {
+            setIsAuthorized(true);
+            setUser({
+              username: decodedToken.username,
+              email: decodedToken.email,
+              role: decodedToken.role,
+              id: decodedToken.id,
+            });
+          } else {
+            setIsAuthorized(false);
+            setUser(null);
+          }
+        } catch (err) {
+          console.error("Invalid token:", err);
+          setIsAuthorized(false);
+        }
+      }
+    };
+
+    fetchAuthData();
+  }, []);
+
+  return { isAuthorized, user };
+};
+
+
+
+
+header: 
+import { useNavigate } from "react-router-dom";
+import axios from "axios";
+import { useEffect, useState } from "react";
+import "./HeaderStyle.css";
+import { useAuth } from "../../useAuth";
+const Header = ({ isAuthorized, setIsAuthorized, role, name, id }) => {
+  const [logoutMessage, setLogoutMessage] = useState("");
+  const [logoutError, setLogoutError] = useState("");
+  const [isOpen, setIsOpen] = useState(false); // State to manage dropdown visibility
+  const { isAuthorized, setIsAuthorized, user } = useAuth();
+
+  // Toggle dropdown visibility
+  const toggleDropdown = () => {
+    setIsOpen(!isOpen);
+  };
+
+  const navigate = useNavigate();
+
+  const handleLogout = async () => {
+    try {
+      // Clear the cookie
+      const response = await axios.post(
+        "http://localhost:5000/api/logout",
+        {},
+        { withCredentials: true }
+      );
+
+      setLogoutMessage(response.data.message);
+
+      // Clear localStorage
+      localStorage.removeItem("authorized");
+      setIsAuthorized(false);
+
+      // Redirect to sign-in page after a brief delay to show the message
+      setTimeout(() => {
+        navigate("/signin");
+        setLogoutMessage("");
+      }, 2000);
+    } catch (err) {
+      setLogoutError("Unable to logout. Please try again.");
+      setTimeout(() => setLogoutError(""), 2000);
+      console.error("Error logging out:", err);
+    }
+  };
+
+  return (
+    <nav>
+      <h1>Header</h1>
+      {logoutMessage && <p style={{ color: "green" }}>{logoutMessage}</p>}
+      {logoutError && <p style={{ color: "red" }}>{logoutError}</p>}
+      {isAuthorized ? (
+        <>
+          <div className="account-dropdown">
+            {/* Button to toggle the dropdown */}
+            <button className="account-button" onClick={toggleDropdown}>
+              My Account
+            </button>
+
+            {/* Dropdown menu */}
+            {isOpen && (
+              <div className="menu">
+                <div
+                  className="item"
+                  // onClick={() => alert("Navigate to Profile")}
+                >
+                  Welcome {name}
+                </div>
+                <div
+                  className="item"
+                  onClick={() => navigate(`/profile/${id}`)}
+                >
+                  Profile
+                </div>
+                <div
+                  className="item"
+                  // onClick={() => alert("Logout clicked")}
+                >
+                  Logout
+                </div>
+              </div>
+            )}
+          </div>
+          <button onClick={() => navigate("/my-orders")}>My Orders</button>
+        </>
+      ) : (
+        <button onClick={() => navigate("/signin")}>Sign In</button>
+      )}
+      <button onClick={() => navigate("/signup")}>Sign Up</button>
+      {isAuthorized && role && (
+        <>
+          <button onClick={handleLogout}>Logout</button>
+          <button onClick={() => navigate("/charge")}>Add credit</button>
+          <button onClick={() => navigate("/my-payments")}>My Payments</button>
+        </>
+      )}
+      {isAuthorized && role === "admin" && (
+        <button onClick={() => navigate("/create-admin")}>Create Admin</button>
+      )}
+    </nav>
+  );
+};
+
+export default Header;
+

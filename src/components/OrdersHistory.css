@@ -1,0 +1,241 @@
+.orders-wrapper {
+    padding: 20px 30px;
+    background-color: transparent;
+    /* Updated background to match the body color */
+    color: #fff;
+}
+
+.orders-header {
+    margin-top: 1rem;
+    background: rgba(255, 255, 255, 0.2);
+    /* Backdrop filter effect */
+    backdrop-filter: blur(10px);
+    /* Glass effect */
+    padding: 10px 30px;
+    border-radius: 10px;
+    text-align: left;
+    width: fit-content;
+}
+
+.orders-header h2 {
+    margin: 0;
+    color: #fff;
+    font-size: 28px;
+}
+
+.orders-message {
+    text-align: center;
+    font-size: 16px;
+    color: #666;
+}
+
+.orders-message.error {
+    color: #dc3545;
+}
+
+.orders-list {
+    margin-top: 20px;
+    display: flex;
+    flex-wrap: wrap;
+    gap: 25px;
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.2);
+    border-radius: 8px;
+    padding: 20px;
+}
+
+.order-item {
+    width: calc(50% - 12.5px);
+    background-color: rgba(255, 255, 255, 0.9);
+    border-radius: 8px;
+    padding: 1.25rem;
+    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
+}
+
+.order-main {
+    display: flex;
+    justify-content: space-between;
+    align-items: start;
+    gap: 1rem;
+}
+
+.order-info {
+    display: flex;
+    flex-direction: column;
+    gap: 0.5rem;
+}
+
+.order-id {
+    font-weight: bold;
+    font-size: 1.1rem;
+    color: #333;
+}
+
+.user-info {
+    color: #666;
+    font-size: 0.8rem;
+}
+
+.order-details {
+    display: flex;
+    align-items: center;
+    gap: 1.5rem;
+    margin-left: auto;
+}
+
+.quantity,
+.price {
+    display: flex;
+    align-items: center;
+    gap: 0.25rem;
+    padding: 0;
+    margin: 0;
+}
+
+.quantity {
+    color: #666;
+    font-size: 0.9rem;
+}
+
+.quantity::before {
+    content: 'Qty:';
+    color: #999;
+}
+
+.price::before {
+    content: 'Price:';
+    color: #999;
+    font-size: 1rem;
+}
+
+.price {
+    font-weight: bold;
+    font-size: 1rem;
+    color: #3ba55c;
+}
+
+.p-history-status {
+    font-size: 0.9rem;
+    padding: 0.25rem 0.5rem;
+    font-weight: bold;
+    border-radius: 5px;
+}
+
+.p-history-status.confirmed {
+    color: #198754;
+    background-color: #d1e7dd;
+}
+
+.p-history-status.waiting {
+    color: #fd7e14;
+    background-color: #fff3cd;
+
+}
+
+.p-history-status.rejected {
+    color: #dc3545;
+    background-color: #f8d7da;
+}
+
+.date {
+    color: #666;
+    font-size: 0.9rem;
+    margin: 0;
+}
+
+.pagination {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    gap: 10px;
+    flex-wrap: wrap;
+    margin-top: 20px;
+}
+
+.pagination button {
+    background-color: #fff;
+    border: 2px solid #fff;
+    color: #2c3e50;
+    width: 40px;
+    height: 40px;
+    border-radius: 50%;
+    cursor: pointer;
+    transition: all 0.3s ease;
+}
+
+.pagination button.active {
+    background-color: #2c3e50;
+    color: #fff;
+    border: 2px solid #2c3e50;
+}
+
+.pagination button:hover {
+    background-color: #2c3e50;
+    color: #fff;
+    border: 2px solid #2c3e50;
+}
+
+.next-button {
+    width: auto !important;
+    height: auto !important;
+    padding: 6px 12px !important;
+    border-radius: 5px !important;
+    font-weight: bold;
+}
+
+.no-orders-history {
+    text-align: center;
+    margin-top: 2rem;
+    color: #fff;
+}
+
+@media (max-width: 1200px) {
+    .order-main {
+        flex-direction: column;
+        align-items: flex-start;
+    }
+
+    .order-details {
+        flex-wrap: wrap;
+        gap: 1rem;
+    }
+}
+
+@media (max-width: 992px) {
+    .orders-wrapper {
+        padding: 10px 10px;
+    }
+
+    .orders-list {
+        gap: 15px;
+    }
+
+    .order-item {
+        width: calc(50% - 7.5px);
+    }
+
+    .p-history-status {
+        font-size: 0.9rem;
+        padding: 0.25rem 0.5rem;
+        font-weight: 700;
+    }
+}
+
+@media (max-width: 500px) {
+    .orders-header {
+        margin-top: 0.75rem;
+        padding: 8px 25px;
+    }
+
+    .orders-header h2 {
+        font-size: 25px;
+    }
+
+    .orders-list {
+        padding: 10px;
+        gap: 10px;
+    }
+
+    .order-item {
+        width: 100%;
+    }
+}

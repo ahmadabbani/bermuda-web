@@ -1,0 +1,104 @@
+import React, { useEffect } from "react";
+import { Link, useOutletContext } from "react-router-dom";
+import { toast } from "react-toastify"; // Import toast
+import "react-toastify/dist/ReactToastify.css"; // Import the CSS for styling
+
+const Home = () => {
+  const {
+    allCategories,
+    newLoading,
+    productsLoading,
+    newError,
+    productsError,
+  } = useOutletContext(); // Get the products passed from Dashboard
+  const isLoading = newLoading || productsLoading;
+  const error = newError || productsError;
+
+  // Show error toast if there's an error
+  useEffect(() => {
+    if (error) {
+      toast.error(`Error: ${error}`, {
+        position: "top-right",
+        autoClose: 3000,
+        hideProgressBar: false,
+        closeOnClick: true,
+        pauseOnHover: true,
+        draggable: true,
+      });
+    }
+  }, [error]);
+
+  const requiredSections = [
+    "Applications section",
+    "Games section",
+    "Cards section",
+    "قسم الرصيد و الباقات",
+    "Numbers section",
+    "Social Media Section",
+  ];
+
+  // Filter allCategories to include required sections and categories with "section" or "Section"
+  const filteredCategories = allCategories.filter(
+    (cat) => requiredSections.includes(cat.name) || /section/i.test(cat.name) // Case-insensitive check for "section"
+  );
+
+  const existingSectionNames = new Set(allCategories.map((cat) => cat.name));
+
+  const placeholderCategories = requiredSections
+    .filter((section) => !existingSectionNames.has(section))
+    .map((section) => ({
+      name: section,
+      img: "", // No image URL
+      alt: section, // Use the section name as the alt text
+    }));
+
+  const finalCategories = [...filteredCategories, ...placeholderCategories];
+
+  return (
+    <div>
+      <h1>Categories</h1>
+      {isLoading ? ( // Show loading if either newLoading or productsLoading is true
+        <p>Loading categories and products...</p>
+      ) : (
+        <div
+          className="categories-list"
+          style={{ display: "flex", flexWrap: "wrap", gap: "15px" }}
+        >
+          {finalCategories.map((cat) => (
+            <div key={cat.name} style={{ width: "calc(20% - 15px)" }}>
+              <Link to={`/dashboard/category/${encodeURIComponent(cat.name)}`}>
+                {cat.img ? ( // Render image if available
+                  <img
+                    src={cat.img}
+                    alt={cat.name}
+                    style={{ width: "100%", maxWidth: "100%", height: "auto" }}
+                  />
+                ) : (
+                  // Render placeholder if no image
+                  <div
+                    style={{
+                      width: "100%",
+                      height: "100px",
+                      backgroundColor: "#f0f0f0",
+                      display: "flex",
+                      alignItems: "center",
+                      justifyContent: "center",
+                      fontSize: "16px",
+                      color: "#666",
+                    }}
+                  >
+                    {cat.alt}
+                  </div>
+                )}
+                <p>{cat.name}</p>
+              </Link>
+              <p>{cat?.section}</p>
+            </div>
+          ))}
+        </div>
+      )}
+    </div>
+  );
+};
+
+export default Home;

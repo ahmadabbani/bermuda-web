@@ -1,0 +1,393 @@
+.create-items-home {
+    margin-top: 2rem;
+    background: rgba(255, 255, 255, 0.2);
+    /* Backdrop filter effect */
+    backdrop-filter: blur(10px);
+    /* Glass effect */
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    border-radius: 10px;
+    text-align: left;
+    width: fit-content;
+    padding: 15px 30px;
+    line-height: normal;
+}
+
+.create-items-home h2 {
+    margin: 0;
+    color: #fff;
+    font-size: 28px;
+    padding: 0;
+}
+
+/*categories*/
+.create-category {
+    max-width: 600px;
+    margin: 3.5rem auto 1rem auto;
+    padding: 2rem;
+    background-color: #fff;
+    border-radius: 8px;
+    font-family: 'Segoe UI', sans-serif;
+}
+
+.create-category__title {
+    color: #8360a9;
+    font-size: 2rem;
+    margin-bottom: 3rem;
+    text-align: center;
+    font-weight: bold;
+}
+
+.create-category__form-group {
+    margin-bottom: 1.5rem;
+}
+
+.create-category__label {
+    display: block;
+    color: #8360a9;
+    margin-bottom: 0.5rem;
+    font-weight: 600;
+}
+
+.create-category__input {
+    width: 100%;
+    padding: 0.8rem;
+    border: 2px solid #e9ecef;
+    border-radius: 4px;
+    font-size: 1rem;
+    transition: border-color 0.3s ease;
+}
+
+.create-category__input:focus {
+    outline: none;
+    border-color: #8360a9;
+    box-shadow: 0 0 0 3px rgba(131, 96, 169, 0.1);
+}
+
+.create-category__input::placeholder {
+    color: #999;
+}
+
+.create-category__select-wrapper {
+    position: relative;
+}
+
+.create-category__select {
+    width: 100%;
+    padding: 0.8rem;
+    border: 2px solid #e9ecef;
+    border-radius: 4px;
+    appearance: none;
+    background: url("data:image/svg+xml;charset=UTF-8,%3csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='%238360a9' stroke-width='2' stroke-linecap='round' stroke-linejoin='round'%3e%3cpolyline points='6 9 12 15 18 9'%3e%3c/polyline%3e%3c/svg%3e") no-repeat right 0.8rem center/16px 16px;
+    background-color: white;
+    cursor: pointer;
+}
+
+.create-category__select:focus {
+    outline: none;
+    border-color: #8360a9;
+    box-shadow: 0 0 0 3px rgba(131, 96, 169, 0.1);
+}
+
+.create-category__file-input {
+    position: relative;
+    color: #999;
+}
+
+.create-category__file {
+    width: 100%;
+    padding: 0.8rem;
+    border: 2px solid #e9ecef;
+    border-radius: 4px;
+    background: white;
+    cursor: pointer;
+}
+
+.create-category__file::file-selector-button {
+    visibility: hidden;
+}
+
+.create-category__file:before {
+    content: 'Choose File';
+    position: absolute;
+    left: 0.5rem;
+    top: 50%;
+    transform: translateY(-50%);
+    background: #8360a9;
+    color: white;
+    padding: 0.4rem 0.8rem;
+    border-radius: 4px;
+    font-size: 0.9rem;
+    transition: 0.3s ease;
+}
+
+.create-category__file:hover:before {
+    opacity: 0.8;
+}
+
+.create-category__submit {
+    width: 100%;
+    padding: 1rem;
+    background: #8360a9;
+    color: white;
+    border: none;
+    border-radius: 4px;
+    font-size: 1rem;
+    font-weight: 600;
+    cursor: pointer;
+    transition: opacity 0.3s ease;
+}
+
+.create-category__submit:hover {
+    opacity: 0.8;
+}
+
+.create-category__submit:disabled {
+    opacity: 0.7;
+    cursor: not-allowed;
+}
+
+/*products*/
+/* create-product.css */
+.create-product {
+    max-width: 800px;
+    margin: 3.5rem auto 1rem auto;
+    background-color: #fff;
+    padding: 2rem;
+    border-radius: 8px;
+    font-family: 'Segoe UI', sans-serif;
+}
+
+.create-product__title {
+    color: #8360a9;
+    font-size: 2rem;
+    margin-bottom: 3rem;
+    text-align: center;
+    font-weight: bold;
+}
+
+.create-product__form-group {
+    margin-bottom: 1.5rem;
+}
+
+.create-product__label {
+    display: block;
+    color: #8360a9;
+    margin-bottom: 0.5rem;
+    font-weight: 600;
+}
+
+.create-product__input {
+    width: 100%;
+    padding: 0.8rem;
+    border: 2px solid #e9ecef;
+    border-radius: 4px;
+    font-size: 1rem;
+    transition: border-color 0.3s ease;
+}
+
+.create-product__input:focus {
+    outline: none;
+    border-color: #8360a9;
+    box-shadow: 0 0 0 3px rgba(131, 96, 169, 0.1);
+}
+
+.create-product__input::placeholder {
+    color: #999;
+}
+
+.create-product__select-wrapper {
+    position: relative;
+}
+
+.create-product__select {
+    width: 100%;
+    padding: 0.8rem;
+    border: 2px solid #e9ecef;
+    border-radius: 4px;
+    appearance: none;
+    background: url("data:image/svg+xml;charset=UTF-8,%3csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='%238360a9' stroke-width='2' stroke-linecap='round' stroke-linejoin='round'%3e%3cpolyline points='6 9 12 15 18 9'%3e%3c/polyline%3e%3c/svg%3e") no-repeat right 0.8rem center/16px 16px;
+    background-color: white;
+    cursor: pointer;
+}
+
+.create-product__select:focus {
+    outline: none;
+    border-color: #8360a9;
+    box-shadow: 0 0 0 3px rgba(131, 96, 169, 0.1);
+}
+
+.create-product__file-input {
+    position: relative;
+}
+
+.create-product__file {
+    width: 100%;
+    padding: 0.8rem;
+    border: 2px solid #e9ecef;
+    border-radius: 4px;
+    background: white;
+    color: #999;
+    cursor: pointer;
+}
+
+.create-product__file::file-selector-button {
+    visibility: hidden;
+}
+
+.create-product__file:before {
+    content: 'Choose File';
+    position: absolute;
+    left: 0.5rem;
+    top: 50%;
+    transform: translateY(-50%);
+    background: #8360a9;
+    color: white;
+    padding: 0.4rem 0.8rem;
+    border-radius: 4px;
+    font-size: 0.9rem;
+}
+
+.create-product__file:hover::before {
+    opacity: 0.8;
+}
+
+.create-product__submit {
+    width: 100%;
+    padding: 1rem;
+    background: #8360a9;
+    color: white;
+    border: none;
+    border-radius: 4px;
+    font-size: 1rem;
+    font-weight: 600;
+    cursor: pointer;
+    transition: opacity 0.3s ease;
+}
+
+.create-product__submit:hover {
+    opacity: 0.9;
+}
+
+.create-product__submit:disabled {
+    opacity: 0.7;
+    cursor: not-allowed;
+}
+
+/* Dynamic Fields Specific Styles */
+.create-product__dynamic-group {
+    border: 2px solid #e9ecef;
+    border-radius: 6px;
+    padding: 1rem;
+    margin-bottom: 1.5rem;
+    background: white;
+}
+
+.create-product__dynamic-header {
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+    margin-bottom: 1rem;
+}
+
+.create-product__delete-field {
+    border: none;
+    background: transparent;
+    cursor: pointer;
+    padding: 4px;
+    display: flex;
+    align-items: center;
+    transition: background 0.2s ease;
+}
+
+.create-product__delete-field:hover {
+    background: #fff0f0;
+    border-radius: 4px;
+}
+
+.create-product__field-number {
+    color: #8360a9;
+    font-weight: 600;
+    font-size: 0.9rem;
+}
+
+.create-product__add-field {
+    width: 100%;
+    padding: 0.8rem;
+    border: 2px dashed #e9ecef;
+    background: white;
+    color: #8360a9;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 0.5rem;
+    margin: 1.5rem 0;
+    cursor: pointer;
+    transition: all 0.3s ease;
+    font-weight: 500;
+}
+
+.create-product__add-field:hover {
+    border-color: #8360a9;
+    background: #f8f5ff;
+}
+
+.create-product__helper-text {
+    color: #999;
+    font-size: 0.85rem;
+    margin: -0.5rem 0 0.75rem;
+    line-height: 1.4;
+}
+
+.create-product__add-icon {
+    stroke-width: 2.5;
+}
+
+@media (max-width: 580px) {
+
+    /*categories*/
+    .create-category {
+        margin: 1.5rem auto 1rem auto;
+        padding: 1.5rem;
+    }
+
+    .create-category__title {
+        font-size: 1.8rem;
+        margin-bottom: 2.25rem;
+    }
+
+    .create-category__form-group {
+        margin-bottom: 1rem;
+    }
+
+    .create-category__input {
+        padding: 0.5rem;
+    }
+
+    .create-category__input::placeholder {
+        font-size: 0.8rem;
+    }
+
+    .create-product {
+        margin: 1.5rem auto 1rem auto;
+        padding: 1.5rem;
+    }
+
+    .create-product__title {
+        font-size: 1.8rem;
+        margin-bottom: 2.25rem;
+    }
+
+    .create-product__input::placeholder {
+        font-size: 0.8rem;
+    }
+
+    .create-product__input {
+        padding: 0.5rem;
+    }
+
+    .create-product__form-group {
+        margin-bottom: 1rem;
+    }
+}

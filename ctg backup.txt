@@ -1,0 +1,446 @@
+import axios from "axios";
+import React, { useState, useEffect } from "react";
+import { useParams, useOutletContext, useNavigate } from "react-router-dom";
+import { useAuth } from "../../AuthContext";
+
+const Categorie = () => {
+  const { id: categoryName } = useParams(); // `id` here is the category_name
+  const {
+    products,
+    productsLoading,
+    productsError,
+    isAuthorized,
+    user,
+    createdProducts,
+    createdProductsLoading,
+    createdProductsError,
+  } = useOutletContext(); // Get the products passed from Dashboard
+  const navigate = useNavigate();
+
+  const [selectedProduct, setSelectedProduct] = useState(null);
+  const [quantity, setQuantity] = useState(1);
+  const [error, setError] = useState("");
+  const [orderMessage, setOrderMessage] = useState("");
+  const [orderError, setOrderError] = useState("");
+  const [emailValid, setEmailValid] = useState("");
+  const [loading, setLoading] = useState(false);
+  // const { isAuthorized, user } = useAuth;
+
+  const [formData, setFormData] = useState({
+    product_name: "",
+    total_price: 0,
+    quantity: 1,
+    type: "OUT",
+    email: "",
+    phone: "",
+    username: user?.username || "", // Fallback to empty string if username is null/undefined
+    user_id: user?.id || null, // Fallback to null if userId is null/undefined
+    accountemail: user?.email || "", // Fallback to empty string if accountemail is null/undefined
+    status: "waiting",
+  });
+
+  // Update formData when selectedProduct or quantity changes
+  useEffect(() => {
+    if (selectedProduct) {
+      setFormData((prev) => ({
+        ...prev,
+        product_name: selectedProduct.name,
+        total_price: selectedProduct.price * quantity,
+        quantity: quantity,
+      }));
+    }
+  }, [selectedProduct, quantity]);
+
+  // Filter products based on the category_name
+  const filteredProducts = products.filter(
+    (product) => product.category_name === decodeURIComponent(categoryName)
+  );
+
+  const normalizedProducts = filteredProducts.map((product) => ({
+    ...product,
+    id: `p-${product.id}`, // Prefix ID with "p-"
+  }));
+
+  const filteredCreatedProducts = createdProducts.filter(
+    (product) => product.category_name === decodeURIComponent(categoryName)
+  );
+
+  const normalizedCreatedProducts = filteredCreatedProducts.map((product) => ({
+    id: `c-${product.id}`, // Prefix ID with "c-"
+    name: product.product_name, // Rename product_name to name
+    price: product.price,
+    category_name: product.category_name,
+    available: product.available,
+    category_img: product.image,
+    // Add other properties as needed
+  }));
+
+  const filteredAllProducts = [
+    ...normalizedProducts,
+    ...normalizedCreatedProducts,
+  ];
+
+  const openModal = (product) => {
+    if (!isAuthorized) {
+      // Redirect to sign-in if not authorized
+      navigate("/dashboard");
+    } else {
+      setSelectedProduct(product);
+      if (!product.qty_values) {
+        setQuantity(1); // Default quantity if qty_values is null
+      } else {
+        setQuantity(parseInt(product.qty_values.min, 10)); // Start with minimum value
+      }
+    }
+  };
+
+  const closeModal = () => {
+    setSelectedProduct(null);
+    setQuantity(1);
+    setError("");
+    setEmailValid("");
+    setOrderMessage("");
+    setOrderError("");
+    setFormData((prev) => ({
+      ...prev,
+      email: "",
+      phone: "",
+    }));
+  };
+
+  const handleQuantityChange = (newQuantity) => {
+    if (selectedProduct?.qty_values) {
+      const min = parseInt(selectedProduct.qty_values.min, 10);
+      const max = parseInt(selectedProduct.qty_values.max, 10);
+      if (newQuantity >= min && newQuantity <= max) {
+        setQuantity(newQuantity);
+        setError("");
+      } else {
+        setError(`Quantity must be between ${min} and ${max}`);
+        setTimeout(() => {
+          setError("");
+        }, 1000);
+      }
+    }
+  };
+
+  const handleSubmit = async (e) => {
+    e.preventDefault();
+    // Prevent double submission
+    if (loading) return;
+    // Ensure userId and username are available before proceeding
+    if (!user?.id || !user?.username) {
+      console.error("User ID or Username is missing.");
+      return;
+    }
+    /* Validate email
+    const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+    if (!emailRegex.test(formData.email)) {
+      setEmailValid("Please enter a valid email address.");
+      return;
+    }*/
+    setLoading(true);
+    try {
+      const response = await axios.post(
+        "http://localhost:5000/api/orders",
+        formData,
+        {
+          headers: { "Content-Type": "application/json" },
+        }
+      );
+
+      if (response.data.orderStatus) {
+        setEmailValid("");
+        setOrderError("");
+        setOrderMessage(response.data.message);
+        setTimeout(() => {
+          closeModal();
+        }, 2000);
+      } else {
+        setOrderMessage("");
+        setOrderError(
+          response.data.error || "An error occurred while placing your order"
+        );
+      }
+    } catch (error) {
+      console.error("Error submitting order:", error);
+      if (error.response) {
+        // Server responded with an error status
+        setOrderError(
+          error.response.data.error ||
+            "An error occurred while placing your order"
+        );
+      } else if (error.request) {
+        // Request was made but no response received
+        setOrderError("Unable to reach the server. Please try again later.");
+      } else {
+        // Something else went wrong
+        setOrderError("An unexpected error occurred. Please try again.");
+      }
+    } finally {
+      // Stop loading whether successful or not
+      setLoading(false);
+    }
+  };
+
+  const handleChange = (e) => {
+    const { name, value } = e.target;
+    setFormData((prev) => ({
+      ...prev,
+      [name]: value,
+    }));
+    setError("");
+    setOrderError("");
+    setEmailValid("");
+  };
+  const allLoading = productsLoading || createdProductsLoading;
+  const allError = productsError || createdProductsError;
+  if (allLoading) {
+    return <p>Loading products...</p>; // Show loading spinner or message
+  }
+
+  if (allError) {
+    return <p style={{ color: "red" }}>Error: {allError}</p>; // Show error message
+  }
+  return (
+    <div>
+      <h2>Products in {categoryName}</h2>
+      <button
+        onClick={() => navigate("/dashboard")}
+        style={{
+          padding: "10px",
+          backgroundColor: "#007bff",
+          color: "#fff",
+          border: "none",
+          borderRadius: "5px",
+          cursor: "pointer",
+        }}
+      >
+        Back to Dashboard
+      </button>
+      <div
+        className="products-list"
+        style={{
+          display: "flex",
+          flexWrap: "wrap",
+          gap: "20px",
+          marginTop: "20px",
+        }}
+      >
+        {filteredAllProducts.length > 0 ? (
+          filteredAllProducts.map((product) => {
+            // Normalize the image path: replace backslashes with forward slashes
+            const normalizedImagePath = product.category_img.replace(
+              /\\/g,
+              "/"
+            );
+            // Check if the image is a local path (starts with "uploads/")
+            const isLocalImage = normalizedImagePath.startsWith("uploads/");
+
+            // Construct the full image URL
+            const imageUrl = isLocalImage
+              ? `http://localhost:5000/${normalizedImagePath}` // Prepend backend URL
+              : normalizedImagePath; // Use cloud URL as-is
+            return (
+              <div
+                key={product.id}
+                style={{
+                  opacity: product.available ? 1 : 0.5,
+                  cursor: product.available ? "pointer" : "not-allowed",
+                  border: "1px solid #ccc",
+                  borderRadius: "10px",
+                  padding: "10px",
+                  textAlign: "center",
+                }}
+                onClick={() => product.available && openModal(product)}
+              >
+                <h4>{product.name}</h4>
+                <img
+                  src={imageUrl} // Use the constructed image URL
+                  alt={product.name}
+                  style={{
+                    filter: product.available ? "none" : "grayscale(100%)",
+                    width: "100px",
+                    height: "100px",
+                    borderRadius: "5px",
+                  }}
+                />
+                {product.available && <p>Price: {product.price}</p>}
+              </div>
+            );
+          })
+        ) : (
+          <p>No products available in this category.</p>
+        )}
+      </div>
+
+      {selectedProduct && (
+        <div
+          style={{
+            position: "fixed",
+            top: 0,
+            left: 0,
+            width: "100%",
+            height: "100%",
+            backgroundColor: "rgba(0, 0, 0, 0.5)",
+            display: "flex",
+            justifyContent: "center",
+            alignItems: "center",
+          }}
+        >
+          <div
+            style={{
+              backgroundColor: "#fff",
+              padding: "20px",
+              borderRadius: "10px",
+              width: "400px",
+              textAlign: "center",
+            }}
+          >
+            <h4>{selectedProduct.name}</h4>
+            <p>
+              Email or phone number in order to get back to you when the order
+              is ready
+            </p>
+            {emailValid && <p style={{ color: "red" }}>{emailValid}</p>}
+            {orderError && <p style={{ color: "red" }}>{orderError}</p>}
+            {orderMessage && <p style={{ color: "green" }}>{orderMessage}</p>}
+            <div style={{ marginTop: "10px" }}>
+              <input
+                type="text"
+                name="email"
+                placeholder="Enter your email"
+                value={formData.email}
+                onChange={handleChange}
+                style={{
+                  width: "100%",
+                  padding: "8px",
+                  marginBottom: "10px",
+                  borderRadius: "4px",
+                  border: "1px solid #ccc",
+                }}
+              />
+              <input
+                type="text"
+                name="phone"
+                placeholder="Enter your phone number"
+                value={formData.phone}
+                onChange={handleChange}
+                style={{
+                  width: "100%",
+                  padding: "8px",
+                  borderRadius: "4px",
+                  border: "1px solid #ccc",
+                }}
+              />
+            </div>
+            {selectedProduct.qty_values ? (
+              <div>
+                <div
+                  style={{
+                    display: "flex",
+                    justifyContent: "center",
+                    gap: "10px",
+                  }}
+                >
+                  <button
+                    onClick={() => handleQuantityChange(quantity - 1)}
+                    disabled={
+                      quantity <=
+                      parseInt(selectedProduct.qty_values.min - 1, 10)
+                    }
+                    style={{
+                      padding: "5px 10px",
+                      backgroundColor: "#007bff",
+                      color: "#fff",
+                      border: "none",
+                      borderRadius: "5px",
+                      cursor: "pointer",
+                    }}
+                  >
+                    -
+                  </button>
+                  <input
+                    type="text"
+                    name="quantity"
+                    value={quantity}
+                    onChange={(e) =>
+                      handleQuantityChange(parseInt(e.target.value, 10))
+                    }
+                    style={{
+                      width: "50px",
+                      textAlign: "center",
+                      padding: "5px",
+                      borderRadius: "4px",
+                      border: "1px solid #ccc",
+                    }}
+                  />
+                  <button
+                    onClick={() => handleQuantityChange(quantity + 1)}
+                    disabled={
+                      quantity >=
+                      parseInt(selectedProduct.qty_values.max + 1, 10)
+                    }
+                    style={{
+                      padding: "5px 10px",
+                      backgroundColor: "#007bff",
+                      color: "#fff",
+                      border: "none",
+                      borderRadius: "5px",
+                      cursor: "pointer",
+                    }}
+                  >
+                    +
+                  </button>
+                </div>
+                <p>Total Price: {selectedProduct.price * quantity}</p>
+              </div>
+            ) : (
+              <p>Price: {selectedProduct.price}</p>
+            )}
+
+            {error && <p style={{ color: "red" }}>{error}</p>}
+            <button
+              onClick={handleSubmit}
+              disabled={loading}
+              style={{
+                marginTop: "10px",
+                padding: "10px",
+                backgroundColor: loading ? "#ccc" : "#28a745",
+                color: "#fff",
+                border: "none",
+                borderRadius: "5px",
+                cursor: loading ? "not-allowed" : "pointer",
+                display: "flex",
+                alignItems: "center",
+                justifyContent: "center",
+              }}
+            >
+              {loading ? (
+                <div className="spinner"></div> // Add a CSS spinner
+              ) : (
+                "Send Order"
+              )}
+            </button>
+            <button
+              onClick={closeModal}
+              style={{
+                marginTop: "20px",
+                padding: "10px",
+                backgroundColor: "#dc3545",
+                color: "#fff",
+                border: "none",
+                borderRadius: "5px",
+                cursor: "pointer",
+              }}
+            >
+              Close
+            </button>
+          </div>
+        </div>
+      )}
+    </div>
+  );
+};
+
+export default Categorie;

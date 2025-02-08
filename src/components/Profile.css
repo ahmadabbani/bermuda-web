@@ -1,0 +1,296 @@
+.profile {
+    padding: 20px 30px;
+    background-color: transparent;
+    /* Updated background to match the body color */
+    color: #fff;
+    /* Ensure text is visible on the purple background */
+}
+
+.loading {
+    color: #fff;
+}
+
+.profile-infos {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin: 1rem 0 0 0;
+}
+
+.profile-data {
+    padding: 10px 20px;
+    background: rgb(255, 255, 255, 0.1);
+    /* Semi-transparent background */
+    border-radius: 10px;
+    backdrop-filter: blur(10px);
+    /* Creates the glass effect */
+    -webkit-backdrop-filter: blur(10px);
+    /* For Safari */
+    /* Text color for contrast */
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.2);
+    /* Subtle shadow for depth */
+    max-width: 400px;
+    width: 400px;
+    /* Optional: Limit the width */
+    margin: 0;
+    /* Center the card */
+}
+
+.profile-data p {
+    color: #fff;
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    font-size: 15px;
+    padding: 0;
+    margin: 0 0 10px 0;
+}
+
+.profile-buttons {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    gap: 10px;
+    margin-bottom: 0;
+    margin-top: 5px;
+    width: 100%;
+}
+
+.profile-data .reset-profile {
+    padding: 7px 7px;
+    width: 100%;
+    background-color: #fff;
+    color: #2c3e50;
+    border: none;
+    border-radius: 5px;
+    margin: 0;
+    font-weight: 600;
+    transition: 0.3s ease;
+}
+
+
+.profile-data .reset-profile:hover {
+    background-color: #f1f1f1;
+}
+
+.profile-data .delete-profile {
+    padding: 7px 7px;
+    width: 100%;
+    background-color: #db1e1e;
+    color: #fff;
+    border: none;
+    border-radius: 5px;
+    margin: 0;
+    font-weight: 600;
+    transition: 0.3s ease;
+}
+
+
+.profile-data .delete-profile:hover {
+    background-color: rgb(202, 1, 1);
+}
+
+.profile-welcome {
+    padding: 20px;
+    background: rgb(255, 255, 255, 0.1);
+    /* Semi-transparent background */
+    border-radius: 10px;
+    backdrop-filter: blur(10px);
+    /* Creates the glass effect */
+    -webkit-backdrop-filter: blur(10px);
+    /* For Safari */
+    color: #fff;
+    /* Text color for contrast */
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.2);
+    /* Subtle shadow for depth */
+    max-width: 400px;
+    /* Optional: Limit the width */
+    margin: 0;
+    /* Center the card */
+}
+
+.profile-welcome p {
+    font-size: 18px;
+}
+
+.balance-positive {
+    color: #6ec272;
+    font-weight: bold;
+}
+
+.balance-negative {
+    color: #f0695f;
+    font-weight: bold;
+}
+
+
+.profile-heading {
+    margin-top: 0;
+}
+
+.transactions-table {
+    margin-top: 1.5rem;
+}
+
+.transaction-item {
+    background-color: #ffffff;
+    /* Slight off-white for better contrast */
+    border-radius: 8px;
+    margin: 10px 0;
+    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+    overflow: hidden;
+}
+
+.transaction-header {
+    padding: 15px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    border-bottom: 1px solid #ddd;
+}
+
+.transaction-info {
+    display: flex;
+    align-items: center;
+}
+
+.amount {
+    font-weight: bold;
+    margin-left: 10px;
+}
+
+.green {
+    color: #28a745;
+}
+
+.red {
+    color: #dc3545;
+}
+
+
+.transaction-type {
+    font-weight: bold;
+    font-size: 14px;
+    text-transform: uppercase;
+    margin-left: 0.5rem;
+
+
+}
+
+.transaction-status {
+    display: flex;
+    flex-direction: column;
+    align-items: flex-end;
+}
+
+.status {
+    padding: 5px 10px;
+    border-radius: 5px;
+    font-size: 14px;
+    font-weight: bold;
+    text-transform: uppercase;
+    margin-bottom: 5px;
+}
+
+.status.confirmed {
+    background-color: #d4edda;
+    color: #155724;
+}
+
+.status.rejected {
+    background-color: #f8d7da;
+    color: #721c24;
+}
+
+.status.waiting {
+    background-color: #fff3cd;
+    color: #856404;
+}
+
+.date {
+    font-weight: bold;
+    font-size: 12px;
+    color: #c4c4c4;
+    /* Lighter text for the date */
+}
+
+.transaction-body {
+    padding: 10px 15px;
+    background-color: #f9f9f9;
+    display: block;
+    /* Make product name visible without hover */
+}
+
+.product-name {
+    font-size: 16px;
+    color: #2c3e50;
+    font-weight: bold;
+}
+
+.transaction-item .transaction-header {
+    cursor: default;
+    /* Prevent hover behavior to open the modal */
+}
+
+.no-transactions {
+    text-align: center;
+    margin-top: 2rem;
+}
+
+@media (max-width: 800px) {
+    .profile-infos {
+        flex-direction: column;
+        gap: 10px;
+        align-items: start;
+    }
+}
+
+@media (max-width: 470px) {
+
+    .profile {
+        padding: 20px 15px;
+    }
+
+    .profile-data {
+        width: 300px;
+    }
+
+    .profile-buttons {
+        justify-content: start;
+        gap: 8px;
+        padding: 0 !important;
+        width: fit-content;
+        margin-left: 0;
+        margin-right: 0;
+    }
+
+    .reset-profile,
+    .delete-profile {
+        padding: 5px 5px;
+        font-size: 14px;
+        margin: 0;
+        width: auto !important;
+    }
+}
+
+@media (max-width: 375px) {
+    .profile-welcome {
+        padding: 15px;
+    }
+}
+
+@media (max-width: 325px) {
+    .profile-data {
+        width: 280px;
+    }
+
+    .profile-buttons {
+        gap: 5px;
+    }
+
+    .reset-profile,
+    .delete-profile {
+        padding: 3px 3px;
+        font-size: 12px;
+    }
+}
