@@ -471,7 +471,7 @@ const Categorie = () => {
                 const normalizedPath = subCategory.image.replace(/\\/g, "/");
                 const isLocalPath = normalizedPath.startsWith("uploads/");
                 const imgUrl = isLocalPath
-                  ? `http://localhost:5000/${normalizedPath}`
+                  ? `${import.meta.env.VITE_IMAGE_BASE_URL}/${normalizedPath}`
                   : normalizedPath;
 
                 return (
@@ -504,7 +504,9 @@ const Categorie = () => {
                   const isLocalImage =
                     normalizedImagePath.startsWith("uploads/");
                   const imageUrl = isLocalImage
-                    ? `http://localhost:5000/${normalizedImagePath}`
+                    ? `${
+                        import.meta.env.VITE_IMAGE_BASE_URL
+                      }/${normalizedImagePath}`
                     : normalizedImagePath;
                   return (
                     <div
