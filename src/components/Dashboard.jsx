@@ -26,6 +26,10 @@ const Dashboard = () => {
     //products from api
     const fetchProducts = async () => {
       try {
+        console.log(
+          "API URL:",
+          `${import.meta.env.VITE_EXTERNAL_API_URL}/products`
+        );
         setProductsLoading(true); // Set loading to true
         setProductsError(null); // Reset error state
 
@@ -60,12 +64,16 @@ const Dashboard = () => {
 
     const fetchNewCategories = async () => {
       try {
+        console.log(
+          "API db URL:",
+          `${import.meta.env.VITE_API_URL}/categories`
+        );
         setNewLoading(true); // Set loading to true
         setNewError(null); // Reset error state
 
         // Fetch categories from endoit API
         const { data } = await axios.get(
-          `${import.meta.env.VITE_API_URL}categories`
+          `${import.meta.env.VITE_API_URL}/categories`
         );
 
         // Transform new categories to match the structure
