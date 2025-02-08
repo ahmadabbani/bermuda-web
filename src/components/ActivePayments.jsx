@@ -176,7 +176,9 @@ const ActivePayments = () => {
                     {payment.image_path && (
                       <div className="waiting-image-container">
                         <img
-                          src={`http://localhost:5000/${payment.image_path}`}
+                          src={`${import.meta.env.VITE_IMAGE_BASE_URL}/${
+                            payment.image_path
+                          }`}
                           alt="Payment Receipt"
                           className="waiting-image"
                         />
