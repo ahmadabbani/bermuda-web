@@ -13,12 +13,12 @@
     font-size: 1rem;
     font-weight: 700;
     cursor: pointer;
-    transition: all 0.2s ease;
+    transition: all 0.3s ease;
     box-shadow: 0 1px 2px rgba(0, 0, 0, 0.05);
 }
 
 .dropdown-button:hover {
-    opacity: 0.8;
+    opacity: 0.9;
 }
 
 .dropdown-menu {
@@ -40,7 +40,7 @@
 .dropdown-list {
     list-style: none;
     margin: 0;
-    padding: 0.5rem 0;
+    padding: 0.5rem 0.75rem;
 }
 
 .dropdown-item {
@@ -49,10 +49,13 @@
     font-size: 0.875rem;
     font-weight: 600;
     cursor: pointer;
+    border: none !important;
     display: flex;
     align-items: center;
     justify-content: space-between;
     transition: all 0.2s ease;
+    border-radius: 12px;
+
 }
 
 .dropdown-item-dashboard {
@@ -65,7 +68,7 @@
 }
 
 .dropdown-item:hover {
-    background-color: #f7fafc;
+    background-color: #eef2f5;
     color: #2c3e50;
 }
 

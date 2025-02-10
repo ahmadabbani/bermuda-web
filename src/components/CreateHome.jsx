@@ -3,7 +3,7 @@ import { useNavigate, useOutletContext } from "react-router-dom";
 import "./CreateHome.css";
 import { toast } from "react-toastify";
 import axios from "axios";
-import { Bold, Plus } from "lucide-react";
+import { Bold, Plus, Trash2 } from "lucide-react";
 const CreateHome = () => {
   const {
     categories,
@@ -17,6 +17,9 @@ const CreateHome = () => {
   } = useOutletContext();
   const [checkboxLoading, setCheckboxLoading] = useState(false);
   const [checkboxError, setCheckboxError] = useState(null);
+  const [deleteConfirmId, setDeleteConfirmId] = useState(null);
+  const [deleteLoading, setDeleteLoading] = useState(false);
+
   const navigate = useNavigate();
 
   //category toggle
@@ -106,6 +109,28 @@ const CreateHome = () => {
       console.error("Error updating the product:", error);
     } finally {
       setCheckboxLoading(false); // Stop loading
+    }
+  };
+
+  // delete a product
+  const handleDelete = async (productId) => {
+    setDeleteLoading(true);
+    try {
+      const response = await axios.delete(
+        `${import.meta.env.VITE_API_URL}/delete/product/${productId}`
+      );
+
+      if (response.data.deleteStatus) {
+        toast.success("Product deleted successfully!");
+        // Remove deleted product from state
+        setProducts(products.filter((product) => product.id !== productId));
+      }
+    } catch (error) {
+      toast.error("Error deleting product");
+      console.error("Delete error:", error);
+    } finally {
+      setDeleteConfirmId(null);
+      setDeleteLoading(false);
     }
   };
 
@@ -253,6 +278,7 @@ const CreateHome = () => {
                   <th>Category</th>
                   <th>Status</th>
                   <th>Created At</th>
+                  <th>Action</th>
                 </tr>
               </thead>
               <tbody>
@@ -276,6 +302,13 @@ const CreateHome = () => {
                       </label>
                     </td>
                     <td>{new Date(product.created_at).toLocaleDateString()}</td>
+                    <td>
+                      <Trash2
+                        className="delete-icon"
+                        onClick={() => setDeleteConfirmId(product.id)}
+                        size={20}
+                      />
+                    </td>
                   </tr>
                 ))}
               </tbody>
@@ -300,8 +333,8 @@ const CreateHome = () => {
                         <strong>Created At:</strong>{" "}
                         {new Date(product.created_at).toLocaleDateString()}
                       </p>
-                      <div className="d-flex gap-4 align-items-center">
-                        <span className="status-p">Status: </span>
+                      <div className="d-flex gap-3 align-items-center mb-3">
+                        <span className="status-p">Status:</span>
                         <label className="toggle">
                           <input
                             type="checkbox"
@@ -312,11 +345,55 @@ const CreateHome = () => {
                           <span className="slider"></span>
                         </label>
                       </div>
+                      <p className="card-text d-flex align-items-center gap-3">
+                        <strong>Action:</strong>
+                        <Trash2
+                          className="delete-icon"
+                          onClick={() => setDeleteConfirmId(product.id)}
+                          size={20}
+                        />
+                      </p>
                     </div>
                   </div>
                 </div>
               ))}
             </div>
+            {/* Confirmation Modal */}
+            {deleteConfirmId && (
+              <div className="create-modal-overlay">
+                <div className="delete-modal">
+                  <h5>Confirm Delete</h5>
+                  <p>Are you sure you want to delete this product?</p>
+                  <div className="create-modal-buttons">
+                    <button
+                      className="btn btn-secondary"
+                      onClick={() => setDeleteConfirmId(null)}
+                    >
+                      Cancel
+                    </button>
+                    <button
+                      className="btn btn-danger"
+                      onClick={() => handleDelete(deleteConfirmId)}
+                      disabled={deleteLoading}
+                    >
+                      {deleteLoading ? (
+                        <>
+                          <span
+                            className="spinner-border spinner-border-sm"
+                            role="status"
+                          >
+                            <span className="visually-hidden">Loading...</span>
+                          </span>
+                          <span className="ms-2">Deleting...</span>
+                        </>
+                      ) : (
+                        "Delete"
+                      )}
+                    </button>
+                  </div>
+                </div>
+              </div>
+            )}
           </>
         )}
       </div>

@@ -176,9 +176,7 @@ const ActivePayments = () => {
                     {payment.image_path && (
                       <div className="waiting-image-container">
                         <img
-                          src={`${import.meta.env.VITE_IMAGE_BASE_URL}/${
-                            payment.image_path
-                          }`}
+                          src={payment.image_path} // Cloudinary URL is now stored directly in image_path
                           alt="Payment Receipt"
                           className="waiting-image"
                         />

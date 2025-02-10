@@ -190,9 +190,7 @@ const MyPayments = () => {
                     <div className="details-center">
                       {payment.image_path && (
                         <img
-                          src={`${import.meta.env.VITE_IMAGE_BASE_URL}/${
-                            payment.image_path
-                          }`}
+                          src={payment.image_path} // Cloudinary URL is now stored directly in image_path
                           alt="Payment Receipt"
                           className="payment-image"
                         />

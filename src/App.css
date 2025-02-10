@@ -110,6 +110,11 @@ a.active {
   color: inherit !important;
 }
 
+button:active {
+  transform: scale(0.95);
+  transition: 0.3s ease;
+}
+
 /* Forms 
 form {
   display: flex;

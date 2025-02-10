@@ -22,6 +22,18 @@
     animation: wave-gradient 5s ease-in-out infinite;
 }
 
+.home-logo {
+    padding: 1rem 0;
+    width: 100%;
+    display: flex;
+    justify-content: center;
+}
+
+.home-logo img {
+    max-width: 100px;
+    object-fit: cover;
+}
+
 /* Center the modal in the viewport */
 /*.modal-overlay {
     position: fixed;

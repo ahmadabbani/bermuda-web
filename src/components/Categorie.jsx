@@ -1,5 +1,5 @@
 import axios from "axios";
-import React, { useState, useEffect, useRef } from "react";
+import React, { useState, useEffect, useRef, useMemo } from "react";
 import { useParams, useOutletContext, useNavigate } from "react-router-dom";
 
 import { useAuth } from "../../AuthContext";
@@ -27,7 +27,8 @@ const Categorie = () => {
   const [quantity, setQuantity] = useState(1);
   const [error, setError] = useState("");
   const [loading, setLoading] = useState(false);
-  // const { isAuthorized, user } = useAuth;
+  const [searchTerm, setSearchTerm] = useState("");
+
   const [formData, setFormData] = useState({
     product_name: "",
     total_price: 0,
@@ -195,7 +196,23 @@ const Categorie = () => {
     ...additionalSubCategories,
   ];
 
-  console.log(subCategories);
+  // Filter both subcategories and products based on search term
+  const filteredItems = useMemo(() => {
+    const term = searchTerm.toLowerCase().trim();
+
+    const filteredSubCategories = subCategories.filter((subCategory) =>
+      subCategory.name.toLowerCase().startsWith(term)
+    );
+
+    const filteredProducts = filteredAllProducts.filter((product) =>
+      product.name.toLowerCase().startsWith(term)
+    );
+
+    return {
+      filteredSubCategories,
+      filteredProducts,
+    };
+  }, [searchTerm, subCategories, filteredAllProducts]);
 
   const openModal = (product) => {
     if (!isAuthorized) {
@@ -428,7 +445,7 @@ const Categorie = () => {
           border: "1px solid #ffccc7", // Subtle border
           fontSize: "14px", // Smaller font size
           fontWeight: "500", // Medium font weight
-          margin: "16px 0", // Margin for spacing
+          margin: "24px 0", // Margin for spacing
           boxShadow: "0 2px 8px rgba(0, 0, 0, 0.1)", // Soft shadow
           animation: "fadeIn 0.3s ease-in-out", // Fade-in animation
           display: "flex", // Flexbox for icon alignment
@@ -460,14 +477,27 @@ const Categorie = () => {
             {/* Adjust size as needed */}
           </button>
         </div>
-
+        <div className="search-container mb-3">
+          <input
+            type="text"
+            className="search-input"
+            placeholder="Search..."
+            value={searchTerm}
+            onChange={(e) => setSearchTerm(e.target.value)}
+            style={{
+              maxWidth: "300px",
+              padding: "8px 12px",
+              borderRadius: "4px",
+            }}
+          />
+        </div>
         {allLoading ? (
           <LoaderLight />
         ) : (
           <div className="row categories-list">
-            {/* Render Subcategories */}
-            {subCategories.length > 0 &&
-              subCategories.map((subCategory, index) => {
+            {/* Render Filtered Subcategories */}
+            {filteredItems.filteredSubCategories.length > 0 &&
+              filteredItems.filteredSubCategories.map((subCategory, index) => {
                 const normalizedPath = subCategory.image.replace(/\\/g, "/");
                 const isLocalPath = normalizedPath.startsWith("uploads/");
                 const imgUrl = isLocalPath
@@ -478,13 +508,14 @@ const Categorie = () => {
                   <div
                     key={`${subCategory?.id}-${index}`}
                     className="category-item p-item col-md-3 col-sm-4 col-6"
-                    onClick={() =>
+                    onClick={() => {
+                      setSearchTerm(""); // Reset search
                       navigate(
                         `/dashboard/category/${encodeURIComponent(
                           subCategory.name
                         )}`
-                      )
-                    }
+                      );
+                    }}
                     style={{ cursor: "pointer" }}
                   >
                     <img src={imgUrl} alt={subCategory.name} />
@@ -495,8 +526,8 @@ const Categorie = () => {
                 );
               })}
 
-            {filteredAllProducts.length > 0
-              ? filteredAllProducts.map((product, index) => {
+            {filteredItems.filteredProducts.length > 0
+              ? filteredItems.filteredProducts.map((product, index) => {
                   const normalizedImagePath = product.category_img.replace(
                     /\\/g,
                     "/"
@@ -516,7 +547,10 @@ const Categorie = () => {
                         opacity: product.available ? 1 : 0.5,
                         cursor: product.available ? "pointer" : "not-allowed",
                       }}
-                      onClick={() => product.available && openModal(product)}
+                      onClick={() => {
+                        setSearchTerm("");
+                        product.available && openModal(product);
+                      }}
                     >
                       <p className="p-price">
                         {parseFloat(product.price).toFixed(2)}$
@@ -537,8 +571,8 @@ const Categorie = () => {
                     </div>
                   );
                 })
-              : subCategories.length === 0 && (
-                  <p>No products available in this category.</p>
+              : filteredItems.filteredSubCategories.length === 0 && (
+                  <p style={{ fontWeight: "600" }}>No products available.</p>
                 )}
           </div>
         )}

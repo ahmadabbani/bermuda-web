@@ -59,44 +59,51 @@ const Home = () => {
   const finalCategories = [...filteredCategories, ...placeholderCategories];
 
   return (
-    <div
-      className="container-fluid dash-wrapper d-flex justify-content-center align-items-center mt-5
-    mb-3"
-    >
-      <div className="container dashboard-container p-4">
-        <h1 className="main-heading text-main mb-2 mb-sm-5">
-          WELCOME TO BERMUDA
-        </h1>
-        {isLoading ? (
-          <Loader />
-        ) : (
-          <div className="row categories-list">
-            {finalCategories.map((cat, index) => (
-              <div
-                key={`${cat.id}-${index}`}
-                className="col-md-3 col-sm-4 col-6 category-item"
-              >
-                <Link
-                  to={`/dashboard/category/${encodeURIComponent(cat.name)}`}
-                  className="text-decoration-none"
-                >
-                  {cat.img ? (
-                    <img
-                      src={cat.img}
-                      alt={cat.name}
-                      className="category-img img-fluid"
-                    />
-                  ) : (
-                    <div className="placeholder">{cat.alt}</div>
-                  )}
-                  <p className=" sect-name text-center mb-1 mt-0">{cat.name}</p>
-                </Link>
-              </div>
-            ))}
-          </div>
-        )}
+    <>
+      <div className="home-logo">
+        <img src="/images/bermuda-white.png" alt="bermuda-logo" />
       </div>
-    </div>
+      <div
+        className="container-fluid dash-wrapper d-flex justify-content-center align-items-center mt-0
+    mb-3"
+      >
+        <div className="container dashboard-container p-4">
+          <h1 className="main-heading text-main mb-2 mb-sm-5">
+            WELCOME TO BERMUDA
+          </h1>
+          {isLoading ? (
+            <Loader />
+          ) : (
+            <div className="row categories-list">
+              {finalCategories.map((cat, index) => (
+                <div
+                  key={`${cat.id}-${index}`}
+                  className="col-md-3 col-sm-4 col-6 category-item"
+                >
+                  <Link
+                    to={`/dashboard/category/${encodeURIComponent(cat.name)}`}
+                    className="text-decoration-none"
+                  >
+                    {cat.img ? (
+                      <img
+                        src={cat.img}
+                        alt={cat.name}
+                        className="category-img img-fluid"
+                      />
+                    ) : (
+                      <div className="placeholder">{cat.alt}</div>
+                    )}
+                    <p className=" sect-name text-center mb-1 mt-0">
+                      {cat.name}
+                    </p>
+                  </Link>
+                </div>
+              ))}
+            </div>
+          )}
+        </div>
+      </div>
+    </>
   );
 };
 

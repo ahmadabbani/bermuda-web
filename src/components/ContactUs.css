@@ -1,10 +1,22 @@
 .contact-wrapper {
     background: #fff;
-    margin: 4rem auto 2rem auto;
+    margin: 2.5rem auto 2rem auto;
     padding: 40px;
     max-width: 800px;
     border-radius: 25px;
     box-shadow: 0 2px 15px rgba(0, 0, 0, 0.08);
+}
+
+.contact-logo {
+    padding-top: 1rem;
+    width: 100%;
+    display: flex;
+    justify-content: center;
+}
+
+.contact-logo img {
+    max-width: 100px;
+    object-fit: cover;
 }
 
 .contact-heading {
@@ -102,7 +114,7 @@
 
 @media (max-width: 992px) {
     .contact-wrapper {
-        margin: 3rem auto 2rem auto;
+        margin: 2rem auto 2rem auto;
         max-width: 600px;
         padding: 30px;
     }
@@ -115,7 +127,7 @@
 
 @media (max-width: 768px) {
     .contact-wrapper {
-        margin: 2rem 2rem 1rem 2rem;
+        margin: 1.5rem 2rem 1rem 2rem;
         max-width: 100%;
         padding: 20px 30px 30px 30px;
     }
@@ -133,7 +145,7 @@
 
 @media (max-width: 445px) {
     .contact-wrapper {
-        margin: 2rem 1.5rem 1rem 1.5rem;
+        margin: 1.5rem 1.5rem 1rem 1.5rem;
     }
 
     .contact-heading {
@@ -158,7 +170,7 @@
 
 @media (max-width: 375px) {
     .contact-wrapper {
-        margin: 2rem 1rem 1rem 1rem;
+        margin: 1rem 1rem 1rem 1rem;
     }
 
     .contact-heading {

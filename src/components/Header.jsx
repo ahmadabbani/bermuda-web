@@ -75,7 +75,7 @@ const Header = () => {
     }
   }; */
 
-  const NavLinks = () => (
+  const NavLinks = ({ hoverEffect = true, closeMobileMenu }) => (
     <>
       <Link
         className="btn btn-link text-main me-0"
@@ -88,21 +88,27 @@ const Header = () => {
       {isAuthorized ? (
         <>
           <Link
-            className="btn btn-link text-main me-0"
+            className={`btn btn-link  text-main me-0 ${
+              hoverEffect ? "hover-underline" : ""
+            }`}
             to="/my-orders"
             onClick={closeMobileMenu}
           >
             My Orders
           </Link>
           <Link
-            className="btn btn-link text-main me-0"
+            className={`btn btn-link  text-main me-0 ${
+              hoverEffect ? "hover-underline" : ""
+            }`}
             to="/my-payments"
             onClick={closeMobileMenu}
           >
             My Payments
           </Link>
           <Link
-            className="btn btn-link text-main me-0"
+            className={`btn btn-link  text-main me-0 ${
+              hoverEffect ? "hover-underline" : ""
+            }`}
             to="/charge"
             onClick={closeMobileMenu}
           >
@@ -110,7 +116,9 @@ const Header = () => {
           </Link>
           {user?.role === "admin" && (
             <Link
-              className="btn btn-link text-main me-0"
+              className={`btn btn-link  text-main me-0 ${
+                hoverEffect ? "hover-underline" : ""
+              }`}
               to="/admin"
               onClick={closeMobileMenu}
             >
@@ -119,7 +127,7 @@ const Header = () => {
           )}
           <div className="account-dropdown me-0">
             <button
-              className="account-button btn btn-link text-main d-flex align-items-center"
+              className="account-button btn btn-link  text-main d-fl ${hoverEffect ? 'hover-underline' : ''}`ex align-items-center"
               onClick={toggleDropdown}
             >
               My Account
@@ -173,14 +181,18 @@ const Header = () => {
             )}
           </div>
           <Link
-            className="btn btn-link text-main me-0"
+            className={`btn btn-link  text-main me-0 ${
+              hoverEffect ? "hover-underline" : ""
+            }`}
             to="/about-us"
             onClick={closeMobileMenu}
           >
             About Us
           </Link>
           <Link
-            className="btn btn-link text-main me-0"
+            className={`btn btn-link  text-main me-0 ${
+              hoverEffect ? "hover-underline" : ""
+            }`}
             to="/contact-us"
             onClick={closeMobileMenu}
           >
@@ -190,15 +202,19 @@ const Header = () => {
       ) : (
         <>
           <Link
-            className="btn btn-link text-main me-0"
+            className={`btn btn-link  text-main me-0 ${
+              hoverEffect ? "hover-underline" : ""
+            }`}
             to="/about-us"
             onClick={closeMobileMenu}
           >
             About Us
           </Link>
           <Link
-            className="btn btn-link text-main me-0"
-            to="/signup"
+            className={`btn btn-link  text-main me-0 ${
+              hoverEffect ? "hover-underline" : ""
+            }`}
+            to="/contact-us"
             onClick={closeMobileMenu}
           >
             Contact Us
@@ -231,7 +247,7 @@ const Header = () => {
 
         {/* Desktop Navigation */}
         <div className="desktop-nav d-none d-lg-flex align-items-center">
-          <NavLinks />
+          <NavLinks hoverEffect={true} />
         </div>
 
         {/* Mobile Toggle */}
@@ -246,7 +262,7 @@ const Header = () => {
         {isMobileMenuOpen && (
           <div className="mobile-menu active">
             <div className="mobile-menu-content">
-              <NavLinks />
+              <NavLinks hoverEffect={false} />
             </div>
           </div>
         )}
