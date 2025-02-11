@@ -48,12 +48,30 @@ const AddToBalance = () => {
     }
   };
 
-  // Handle image upload
+  // Handle file input change
   const handleImageUpload = (e) => {
     const file = e.target.files[0];
-    if (file) {
-      setImage(file);
+    if (!file) return;
+
+    // Validate file type (optional)
+    const allowedTypes = ["image/jpeg", "image/png", "image/jpg"];
+    if (!allowedTypes.includes(file.type)) {
+      toast.error("Only JPG/JPEG/PNG files are allowed");
+      e.target.value = "";
+      setImage(null);
+      return;
     }
+
+    // Validate file size (3MB example)
+    const MAX_SIZE = 3 * 1024 * 1024;
+    if (file.size > MAX_SIZE) {
+      toast.error("Image must be smaller than 3MB");
+      e.target.value = "";
+      setImage(null);
+      return;
+    }
+
+    setImage(file);
   };
 
   // Handle form submission

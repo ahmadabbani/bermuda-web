@@ -50,7 +50,28 @@ const CreateProduct = () => {
 
   // Handle file input change
   const handleFileChange = (e) => {
-    setFormData({ ...formData, image: e.target.files[0] });
+    const file = e.target.files[0];
+    if (!file) return;
+
+    // Validate file type (optional)
+    const allowedTypes = ["image/jpeg", "image/png", "image/jpg"];
+    if (!allowedTypes.includes(file.type)) {
+      toast.error("Only JPG/JPEG/PNG files are allowed");
+      e.target.value = "";
+      setFormData({ ...formData, image: null });
+      return;
+    }
+
+    // Validate file size (3MB example)
+    const MAX_SIZE = 3 * 1024 * 1024;
+    if (file.size > MAX_SIZE) {
+      toast.error("Image must be smaller than 3MB");
+      e.target.value = "";
+      setFormData({ ...formData, image: null });
+      return;
+    }
+
+    setFormData({ ...formData, image: file });
   };
 
   // Handle adding a new dynamic field
