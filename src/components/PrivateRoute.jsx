@@ -12,12 +12,12 @@ const PrivateRoute = ({ children }) => {
 
   // If not authorized, redirect to dashboard
   if (!isAuthorized) {
-    return <Navigate to="/dashboard" />;
+    return <Navigate to="/" />;
   }
 
   // If authorized but not an admin, redirect to dashboard
   if (user?.role !== "admin") {
-    return <Navigate to="/dashboard" />;
+    return <Navigate to="/" />;
   }
 
   // If authorized and role is admin, allow access

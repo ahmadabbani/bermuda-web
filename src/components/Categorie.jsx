@@ -511,9 +511,7 @@ const Categorie = () => {
                     onClick={() => {
                       setSearchTerm(""); // Reset search
                       navigate(
-                        `/dashboard/category/${encodeURIComponent(
-                          subCategory.name
-                        )}`
+                        `/category/${encodeURIComponent(subCategory.name)}`
                       );
                     }}
                     style={{ cursor: "pointer" }}

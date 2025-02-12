@@ -71,7 +71,7 @@ function App() {
             }
           />
           {/* user Dashboard */}
-          <Route path="/dashboard" element={<Dashboard />}>
+          <Route path="/" element={<Dashboard />}>
             <Route path="" element={<Home />} />{" "}
             <Route path="category/:id" element={<Categorie />} />
           </Route>

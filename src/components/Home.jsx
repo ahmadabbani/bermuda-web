@@ -81,7 +81,7 @@ const Home = () => {
                   className="col-md-3 col-sm-4 col-6 category-item"
                 >
                   <Link
-                    to={`/dashboard/category/${encodeURIComponent(cat.name)}`}
+                    to={`/category/${encodeURIComponent(cat.name)}`}
                     className="text-decoration-none"
                   >
                     {cat.img ? (

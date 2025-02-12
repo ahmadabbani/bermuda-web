@@ -79,7 +79,7 @@ const Header = () => {
     <>
       <Link
         className="btn btn-link text-main me-0"
-        to="/dashboard"
+        to="/"
         onClick={closeMobileMenu}
       >
         <House color="#2c3e50" size={28} style={{ strokeWidth: 2 }} />
@@ -241,7 +241,7 @@ const Header = () => {
   return (
     <nav className="navbar">
       <div className="container-fluid nav-container d-flex justify-content-between align-items-center">
-        <Link className="logo-link" to="/dashboard">
+        <Link className="logo-link" to="/">
           <img src="/images/logo-icon.png" className="logo" alt="Logo" />
         </Link>
 

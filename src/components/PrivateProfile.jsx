@@ -11,7 +11,7 @@ const PrivateProfile = ({ children }) => {
 
   // If not authorized, redirect to dashboard
   if (!isAuthorized) {
-    return <Navigate to="/dashboard" />;
+    return <Navigate to="/" />;
   }
 
   return children;

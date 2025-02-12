@@ -20,7 +20,7 @@ const SignIn = () => {
   // Redirect if already authorized
   useEffect(() => {
     if (isAuthorized) {
-      navigate("/dashboard");
+      navigate("/");
     }
   }, [isAuthorized, navigate]);
 
@@ -58,7 +58,7 @@ const SignIn = () => {
         setIsAuthorized(true); // Update isAuthorized state
         setUser(userData);
         toast.success("Sign in successful!"); // Show a success message
-        navigate("/dashboard"); // Redirect to home page
+        navigate("/"); // Redirect to home page
         // console.log("role:", user.role);
         // setSuccess(true);
         // setError("");

@@ -13,6 +13,8 @@ const Profile = () => {
   const [transactions, setTransactions] = useState([]);
   const [idLoading, setIdLoading] = useState(true); // Loading state for id delay
   const [loading, setLoading] = useState(true);
+  const [showModal, setShowModal] = useState(false);
+
   const {
     user,
     balance,
@@ -63,7 +65,7 @@ const Profile = () => {
     if (String(id) !== String(user?.id) && user?.role !== "admin") {
       // Regular user trying to access another user's profile
       toast.error("You do not have permission to access this profile.");
-      navigate("/dashboard"); // Redirect to home or another page
+      navigate("/"); // Redirect to home or another page
       return;
     }
     setIdLoading(false);
@@ -211,10 +213,33 @@ const Profile = () => {
               </button>
               <button
                 className="delete-profile"
-                onClick={deleteUser}
+                onClick={() => setShowModal(true)}
                 disabled={isDeleting}
               >
                 {isDeleting ? "Deleting..." : "Delete Account"}
+              </button>
+            </div>
+          </div>
+        </div>
+      )}
+      {showModal && (
+        <div className="profile-modal-overlay">
+          <div className="profile-modal">
+            <h2>Confirm Delete</h2>
+            <p>This will delete all your account information.</p>
+            <div className="profile-modal-buttons">
+              <button
+                onClick={() => setShowModal(false)}
+                className="profile-cancel-btn"
+              >
+                Cancel
+              </button>
+              <button
+                onClick={deleteUser}
+                className="profile-delete-btn"
+                disabled={isDeleting}
+              >
+                {isDeleting ? "Deleting..." : "Delete"}
               </button>
             </div>
           </div>
