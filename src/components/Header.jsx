@@ -40,42 +40,7 @@ const Header = () => {
     setIsOpen(false);
   }, [navigate]);
 
-  /* const handleLogout = async () => {
-    try {
-      // Call the logout endpoint to clear the token cookie
-      const response = await axios.post(
-        "http://localhost:5000/api/logout",
-        {}, // No request body needed
-        { withCredentials: true } // Include credentials (cookies)
-      );
-
-      // Show a success message
-      if (response.data.success) {
-        toast.success(response.data.message);
-        console.log("Logout response:", response.data);
-        // Update authorization state and clear user info
-        setIsAuthorized(false);
-        setUser(null);
-        setBalance(0);
-        localStorage.removeItem("userData");
-        // Redirect to the sign-in page after a brief delay
-
-        setTimeout(() => {
-          navigate("/signin");
-        }, 1000);
-      } else {
-        // Handle unsuccessful logout
-        toast.error("Failed to logout. Please try again.");
-      }
-      //  to show the toast message
-    } catch (err) {
-      // Handle errors
-      toast.error("Failed to logout. Please try again.");
-      console.error("Error logging out:", err);
-    }
-  }; */
-
-  const NavLinks = ({ hoverEffect = true, closeMobileMenu }) => (
+  const NavLinks = ({ hoverEffect = true }) => (
     <>
       <Link
         className="btn btn-link text-main me-0"

@@ -71,10 +71,20 @@ const Categorie = () => {
     (product) => product.category_name === decodeURIComponent(categoryName)
   );
 
-  const normalizedProducts = filteredProducts.map((product) => ({
-    ...product,
-    id: `p-${product.id}`, // Prefix ID with "p-"
-  }));
+  // to be added when new p images are ready! added to all products (from single and from subcats)
+  const productImagePaths = {
+    //"PSN  USA 25$": "uploads/pimages/likeelive.jpg",
+  };
+
+  const normalizedProducts = filteredProducts.map((product) => {
+    console.log("PSN USA 25$", product.name);
+
+    return {
+      ...product,
+      id: `p-${product.id}`, // Prefix ID with "p-"
+      //to be added when new images are ready category_img: productImagePaths[product.name] || product.category_img,
+    };
+  });
 
   const currentCategory = decodeURIComponent(categoryName); // Decode the category name
 
@@ -94,6 +104,166 @@ const Categorie = () => {
   }));
 
   const allProducts = [...normalizedProductsA, ...normalizedCreatedProductsA];
+
+  //to be added when new subcatgories imgs are ready
+  /* const subCategoriesMap = {
+    "Applications section": [
+      {
+        name: "Shahid VIP",
+        img: "uploads/pimages/shahidvip.jpg",
+      },
+      {
+        name: "TikTok",
+        img: "uploads/pimages/tiktok.jpg",
+      },
+      {
+        name: "Meyo",
+        img: "uploads/pimages/meyo.jpg",
+      },
+      {
+        name: "Liveu",
+        img: "uploads/pimages/liveu.jpg",
+      },
+      {
+        name: "Tumile live",
+        img: "uploads/pimages/tumilelive.jpg",
+      },
+      {
+        name: "Azar live",
+        img: "uploads/pimages/azarlive.jpg",
+      },
+      {
+        name: "BEE LIVE",
+        img: "uploads/pimages/beelive.jpg",
+      },
+      {
+        name: "PIKA STAR",
+        img: "uploads/pimages/pikastar.jpg",
+      },
+      {
+        name: "YoYo",
+        img: "uploads/pimages/yoyo.jpg",
+      },
+    ],
+    "Games section": [
+      {
+        name: "pubg mobile global",
+        img: "uploads/pimages/pubgmobileglobal.jpg",
+      },
+      {
+        name: "Pubg mobile code",
+        img: "uploads/pimages/pubgmobilecode.jpg",
+      },
+      {
+        name: "Jawaker",
+        img: "uploads/pimages/jawaker.jpg",
+      },
+      {
+        name: "Yalla ludo Gold",
+        img: "uploads/pimages/yallaludogold.jpg",
+      },
+      {
+        name: "yalla ludo diamonds",
+        img: "uploads/pimages/yallaludodiamonds.jpg",
+      },
+      {
+        name: "mobile legends bang bang",
+        img: "uploads/pimages/mobilelegends.jpg",
+      },
+      {
+        name: "Clash of Clans",
+        img: "uploads/pimages/clashofclans.jpg",
+      },
+      {
+        name: "CLASH ROYALE",
+        img: "uploads/pimages/clashroyale.jpg",
+      },
+      {
+        name: "Hay Day",
+        img: "uploads/pimages/hayday.jpg",
+      },
+      {
+        name: "Brawl Stars",
+        img: "uploads/pimages/brawlstars.jpg",
+      },
+      {
+        name: "Arena Breakout",
+        img: "uploads/pimages/arenabreakout.jpg",
+      },
+      {
+        name: "Genshin Impact",
+        img: "uploads/pimages/genshinimpact.jpg",
+      },
+      {
+        name: "Ludo Club",
+        img: "uploads/pimages/ludoclub.jpg",
+      },
+      {
+        name: "Free Fire",
+        img: "uploads/pimages/freefire.jpg",
+      },
+    ],
+    "Cards section": [
+      {
+        name: "Steam card",
+        img: "uploads/pimages/steamcard.jpg",
+      },
+      {
+        name: "I T U N E S",
+        img: "uploads/pimages/itunes.jpg",
+      },
+      {
+        name: "PLAYSTATION LEB",
+        img: "uploads/pimages/playstationleb.jpg",
+      },
+      {
+        name: "PLAYSTATION USA",
+        img: "uploads/pimages/likeelive.jpg",
+      },
+      {
+        name: "PLAYSTATION UAE",
+        img: "uploads/pimages/playstationuae.jpg",
+      },
+      {
+        name: "STEAM TR",
+        img: "uploads/pimages/steamtr.jpg",
+      },
+      {
+        name: "ROBLOX USA",
+        img: "uploads/pimages/robloxusa.jpg",
+      },
+      {
+        name: "STEAM USA",
+        img: "uploads/pimages/steamusa.jpg",
+      },
+      {
+        name: "XBOX USA",
+        img: "uploads/pimages/xboxusa.jpg",
+      },
+      {
+        name: "Nintendo",
+        img: "uploads/pimages/nintendo.jpg",
+      },
+      {
+        name: "Itunes France",
+        img: "uploads/pimages/itunesfrance.jpg",
+      },
+      {
+        name: "Itunes Emirates (uae)",
+        img: "uploads/pimages/itunesuae.jpg",
+      },
+    ],
+    "قسم الرصيد و الباقات": [
+      {
+        name: "ALFA Telcome",
+        img: "uploads/pimages/alfatelcome.jpg",
+      },
+      {
+        name: "Alfa u-share",
+        img: "uploads/pimages/alfaushare.jpg",
+      },
+    ],
+  };*/
 
   const subCategoriesMap = {
     "Applications section": [
@@ -181,11 +351,12 @@ const Categorie = () => {
       const product = products.find(
         (product) => product.category_name === catgName
       );
-
+      console.log("img", catgName.img);
       // Return an object with both name and image (category_img)
       return {
         name: catgName,
         image: product ? product.category_img : "", // Fallback if image not found
+        //to be added when new sub categories images are ready image: catgName ? catgName.img : "",
       };
     }
   );
@@ -503,7 +674,7 @@ const Categorie = () => {
                 const imgUrl = isLocalPath
                   ? `${import.meta.env.VITE_IMAGE_BASE_URL}/${normalizedPath}`
                   : normalizedPath;
-
+                console.log("imgtest:", imgUrl);
                 return (
                   <div
                     key={`${subCategory?.id}-${index}`}

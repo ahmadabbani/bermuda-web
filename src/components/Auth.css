@@ -234,6 +234,10 @@
 }
 
 @media (max-width: 480px) {
+    .form-group input {
+        padding: 6px;
+    }
+
     .request-reset-container {
         max-width: 300px;
         padding: 1rem;

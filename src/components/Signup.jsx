@@ -127,8 +127,8 @@ const SignUp = () => {
       <div className="auth-container  container">
         <h2 className="text-center text-main mb-4">Sign Up</h2>
         <form onSubmit={handleSubmit} className="auth-form">
-          <div className="row mt-1">
-            <div className="form-group col-md-6 col-12 mb-0">
+          <div className="row  mt-1">
+            <div className="form-group col-md-6 col-6 mb-0">
               <label htmlFor="username">Username:</label>
               <input
                 type="text"
@@ -141,7 +141,7 @@ const SignUp = () => {
                 placeholder="username"
               />
             </div>
-            <div className="form-group col-md-6 col-12 mb-0">
+            <div className="form-group col-md-6 col-6 mb-0">
               <label htmlFor="email">Email:</label>
               <input
                 type="text"
@@ -156,7 +156,7 @@ const SignUp = () => {
             </div>
           </div>
           <div className="row">
-            <div className="form-group col-md-6 col-12 mb-0">
+            <div className="form-group col-md-6 col-6 mb-0">
               <label htmlFor="password">Password:</label>
               <input
                 type="password"
@@ -169,7 +169,7 @@ const SignUp = () => {
                 placeholder="password (min 8 characters)"
               />
             </div>
-            <div className="form-group col-md-6 col-12 mb-0">
+            <div className="form-group col-md-6 col-6 mb-0">
               <label htmlFor="confirmPassword">Confirm Password:</label>
               <input
                 type="password"

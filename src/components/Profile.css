@@ -3,6 +3,7 @@
     background-color: transparent;
     /* Updated background to match the body color */
     color: #fff;
+
     /* Ensure text is visible on the purple background */
 }
 
@@ -317,7 +318,7 @@
 @media (max-width: 800px) {
     .profile-infos {
         flex-direction: column;
-        gap: 10px;
+        gap: 15px;
         align-items: start;
     }
 }

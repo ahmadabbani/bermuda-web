@@ -553,6 +553,13 @@
 
 
 @media (max-width: 580px) {
+    .home-logo {
+        padding: 0rem 0;
+    }
+
+    .home-logo img {
+        max-width: 80px;
+    }
 
     .category-item img {
         height: 300px !important;
