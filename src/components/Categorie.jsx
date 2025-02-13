@@ -42,12 +42,6 @@ const Categorie = () => {
     status: "waiting",
     params: [],
   });
-  console.log(
-    "ACCOUNTEMAIL:",
-    formData.accountemail,
-    "USERID:",
-    formData.user_id
-  );
 
   const handleBack = () => {
     navigate(-1); // Go back to the previous history entry
@@ -77,8 +71,6 @@ const Categorie = () => {
   };
 
   const normalizedProducts = filteredProducts.map((product) => {
-    console.log("PSN USA 25$", product.name);
-
     return {
       ...product,
       id: `p-${product.id}`, // Prefix ID with "p-"
@@ -321,7 +313,6 @@ const Categorie = () => {
       image: cat.img,
       section: cat.section,
     }));
-  console.log("added catg img:", additionalSubCategories);
 
   // Combine predefined and additional subcategories
 
@@ -351,7 +342,7 @@ const Categorie = () => {
       const product = products.find(
         (product) => product.category_name === catgName
       );
-      console.log("img", catgName.img);
+
       // Return an object with both name and image (category_img)
       return {
         name: catgName,
@@ -636,7 +627,7 @@ const Categorie = () => {
   return (
     <div className="container-fluid dash-wrapper d-flex justify-content-center align-items-center mt-5 mb-3">
       <div className="catgs-container container p-4">
-        <div className="first-row justify-content-between d-flex  align-items-center mb-2 mb-sm-5">
+        <div className="first-row justify-content-between d-flex  align-items-center mb-1 mb-sm-4 mb-lg-5">
           <h1 className="catgs-heading">Products in {categoryName}</h1>
 
           <button
@@ -648,10 +639,10 @@ const Categorie = () => {
             {/* Adjust size as needed */}
           </button>
         </div>
-        <div className="search-container mb-3">
+        <div className="home-search-container mb-0 mb-sm-3">
           <input
             type="text"
-            className="search-input"
+            className="home-search-input"
             placeholder="Search..."
             value={searchTerm}
             onChange={(e) => setSearchTerm(e.target.value)}
@@ -674,7 +665,7 @@ const Categorie = () => {
                 const imgUrl = isLocalPath
                   ? `${import.meta.env.VITE_IMAGE_BASE_URL}/${normalizedPath}`
                   : normalizedPath;
-                console.log("imgtest:", imgUrl);
+
                 return (
                   <div
                     key={`${subCategory?.id}-${index}`}

@@ -18,7 +18,7 @@ const Dashboard = () => {
   const [createdProductsLoading, setCreatedProductsLoading] = useState(false); // Loading state for products
   const [createdProductsError, setCreatedProductsError] = useState(null);
   const { isAuthorized, user } = useAuth();
-  console.log("dashboard accountemail:", user?.email);
+
   useEffect(() => {
     /* const fetchCategories = async () => {
     
@@ -26,10 +26,6 @@ const Dashboard = () => {
     //products from api
     const fetchProducts = async () => {
       try {
-        console.log(
-          "API URL:",
-          `${import.meta.env.VITE_EXTERNAL_API_URL}/products`
-        );
         setProductsLoading(true); // Set loading to true
         setProductsError(null); // Reset error state
 
@@ -64,10 +60,6 @@ const Dashboard = () => {
 
     const fetchNewCategories = async () => {
       try {
-        console.log(
-          "API db URL:",
-          `${import.meta.env.VITE_API_URL}/categories`
-        );
         setNewLoading(true); // Set loading to true
         setNewError(null); // Reset error state
 

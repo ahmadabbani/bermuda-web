@@ -22,7 +22,6 @@ export const AuthProvider = ({ children }) => {
       );
       const balance = response.data.balance || 0; // Default to 0 if balance is null/undefined
 
-      console.log("Backend response:", response.data);
       setBalance(balance);
       return balance;
     } catch (err) {

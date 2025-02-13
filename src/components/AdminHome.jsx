@@ -103,10 +103,7 @@ const AdminHome = () => {
 
   // Main calculation function
   const calculateSalesMetrics = (payments) => {
-    console.log("Raw payments:", payments);
-
     if (!Array.isArray(payments)) {
-      console.log("Payments is not an array");
       return { totalSales: 0, weeklySales: 0, monthlySales: 0 };
     }
 
@@ -114,8 +111,6 @@ const AdminHome = () => {
     const confirmedPayments = payments.filter(
       (payment) => payment?.status === "confirmed"
     );
-
-    console.log("Confirmed payments:", confirmedPayments);
 
     // Total sales (all time)
     const totalSales = confirmedPayments.reduce(
@@ -127,21 +122,10 @@ const AdminHome = () => {
     const sevenDaysAgo = getDateDaysAgo(7);
     const startOfMonth = getStartOfMonth();
 
-    console.log("Reference dates:", {
-      sevenDaysAgo,
-      startOfMonth,
-    });
-
     // Weekly sales (last 7 days)
     const weeklySales = confirmedPayments
       .filter((payment) => {
         const paymentDate = convertToBeirutTime(payment.created_at);
-        console.log("Payment date comparison:", {
-          original: payment.created_at,
-          converted: paymentDate,
-          sevenDaysAgo,
-          isIncluded: paymentDate >= sevenDaysAgo,
-        });
         return paymentDate >= sevenDaysAgo;
       })
       .reduce((sum, payment) => sum + (parseFloat(payment.amount) || 0), 0);
@@ -153,8 +137,6 @@ const AdminHome = () => {
         return paymentDate >= startOfMonth;
       })
       .reduce((sum, payment) => sum + (parseFloat(payment.amount) || 0), 0);
-
-    console.log("Final metrics:", { totalSales, weeklySales, monthlySales });
 
     return {
       totalSales,

@@ -54,7 +54,6 @@ const Home = () => {
         alt: section, // Use the section name as the alt text
       };
     });
-  console.log("placeholderCategories", placeholderCategories);
 
   const finalCategories = [...filteredCategories, ...placeholderCategories];
 

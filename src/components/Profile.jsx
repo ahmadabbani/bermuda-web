@@ -37,7 +37,6 @@ const Profile = () => {
           withCredentials: true,
         }
       );
-      console.log("API Response:", response);
 
       setProfile(response.data.user);
     } catch (error) {
@@ -60,7 +59,6 @@ const Profile = () => {
       setIdLoading(true); // No user_id, stop loading
       return;
     }
-    console.log("id param:", String(id), "user id:", String(user?.id));
     // Validate access
     if (String(id) !== String(user?.id) && user?.role !== "admin") {
       // Regular user trying to access another user's profile
@@ -84,7 +82,6 @@ const Profile = () => {
             withCredentials: true, //for cookies
           }
         );
-        console.log("frnten id param:", id);
 
         if (response.data.success) {
           setTransactions(response.data.transactions); // Set transactions
@@ -122,7 +119,6 @@ const Profile = () => {
     // Fetch balance for the specific user
     const fetchUserBalance = async () => {
       const balance = await fetchBalance(id); // Fetch balance for the specific user
-      console.log("Fetched balance for user:", id, balance); // Log the fetched balance
       setProfileBalance(balance); // Set the balance for the specific user
     };
 
