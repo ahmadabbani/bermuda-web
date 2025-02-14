@@ -38,7 +38,11 @@ const Profile = () => {
         }
       );
 
-      setProfile(response.data.user);
+      if (response.data.user) {
+        setProfile(response.data.user);
+      } else {
+        toast.error("User data is missing");
+      }
     } catch (error) {
       if (error.response?.status === 404) {
         toast.error("User not found");
@@ -129,7 +133,7 @@ const Profile = () => {
     return () => {
       abortController.abort();
     };
-  }, []);
+  }, [id]);
 
   //delete user profile
   const deleteUser = async () => {
