@@ -97,7 +97,7 @@ const Profile = () => {
             if (error.response.status === 404) {
               setTransactions([]); // No transactions found
             } else {
-              toast.error(
+              console.log(
                 error.response.data.error ||
                   "Failed to fetch transactions. Please try again later."
               );
