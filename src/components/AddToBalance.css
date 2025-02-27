@@ -212,7 +212,8 @@
 
 @media (max-width: 600px) {
     .add-credit {
-        padding: 1rem;
+        margin-bottom: 1rem;
+        padding: 1rem 1rem 0 1rem;
     }
 
     .add-credit__title {
@@ -231,6 +232,10 @@
         min-height: 150px;
         object-fit: contain;
     }
+
+    .add-credit__input::placeholder {
+        font-size: 14px;
+    }
 }
 
 @media (max-width: 510px) {
@@ -242,8 +247,29 @@
         gap: 0.75rem;
     }
 
+    .add-credit__modal {
+
+        padding-left: 0.5rem;
+        padding-right: 0.5rem;
+    }
+
+
     .add-credit__option-icon {
         min-height: auto;
         object-fit: contain;
+    }
+
+    .add-credit__input::placeholder {
+        font-size: 12px;
+    }
+}
+
+@media (max-width: 375px) {
+    .add-credit__input {
+        padding: 5px;
+    }
+
+    .add-credit__input--readonly::placeholder {
+        font-size: 11px;
     }
 }

@@ -173,7 +173,7 @@ const AddToBalance = () => {
                   <input
                     type="text"
                     className="add-credit__input add-credit__input--readonly"
-                    placeholder="TMTunWKFo3iHom3XAqrTDmKtjRm59o3RW9"
+                    placeholder="TYTniaVnULQN3yz7yhKBsdZGEXVJcbagNkTrc20"
                     readOnly
                   />
                 </div>
@@ -183,7 +183,7 @@ const AddToBalance = () => {
                   <input
                     type="text"
                     className="add-credit__input add-credit__input--readonly"
-                    placeholder="0xce024e0990baea823730e3ad6acce701a7ff5a46"
+                    placeholder="0xb5f568a9b12eed28320b6c2625d9e260182e79e9Bnb"
                     readOnly
                   />
                 </div>
@@ -193,7 +193,7 @@ const AddToBalance = () => {
                   <input
                     type="text"
                     className="add-credit__input add-credit__input--readonly"
-                    placeholder="58591793"
+                    placeholder="bep20"
                     readOnly
                   />
                 </div>
@@ -244,7 +244,7 @@ const AddToBalance = () => {
                   <input
                     type="text"
                     className="add-credit__input add-credit__input--readonly"
-                    placeholder="75844542"
+                    placeholder="76457189"
                     readOnly
                   />
                 </div>
